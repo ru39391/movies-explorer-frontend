@@ -2,6 +2,11 @@ import React from 'react';
 import { NavLink, Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Promo from '../Promo/Promo';
+import AboutProject from '../AboutProject/AboutProject';
+import Techs from '../Techs/Techs';
+import AboutMe from '../AboutMe/AboutMe';
+import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 //import ProtectedRoute from './ProtectedRoute';
 
@@ -12,6 +17,13 @@ function App() {
     <Switch>
       <Route exact path="/">
         index
+        <Header />
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+        <Footer />
       </Route>
       <Route exact path="/movies">
         movies
@@ -30,7 +42,6 @@ function App() {
         signin
         <NavLink to="/signup" className="header__link">Регистрация</NavLink>
       </Route>
-      <Footer />
     </Switch>
   );
 }

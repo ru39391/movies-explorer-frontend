@@ -1,11 +1,11 @@
 import React from 'react';
-import './App.css';
+import './Promo.css';
 
-function App() {
+function Promo() {
   return (
-    <div className="App">
-    </div>
+    <>
+    </>
   );
 }
 
-export default App;
+export default Promo;
