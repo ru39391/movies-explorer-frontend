@@ -1,0 +1,45 @@
+{
+  "name": "movies-explorer-frontend",
+  "version": "0.1.0",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ru39391/movies-explorer-frontend.git"
+  },
+  "author": "vladimir_p https://github.com/ru39391",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ru39391/movies-explorer-frontend/issues"
+  },
+  "homepage": "https://github.com/ru39391/movies-explorer-frontend",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^5.2.1",
+    "react-scripts": "3.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
