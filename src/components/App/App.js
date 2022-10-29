@@ -16,8 +16,14 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        index
-        <Header />
+        <Header>
+          <nav>
+            <ul class="nav">
+              <li><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
+              <li><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
+            </ul>
+          </nav>
+        </Header>
         <Promo />
         <AboutProject />
         <Techs />
@@ -26,7 +32,21 @@ function App() {
         <Footer />
       </Route>
       <Route exact path="/movies">
-        movies
+        <Header>
+          <nav>
+            <ul class="nav">
+              <li><a href="#" className="nav__link">Фильмы</a></li>
+              <li><a href="#" className="nav__link">Сохранённые фильмы</a></li>
+            </ul>
+          </nav>
+          <nav>
+            <ul class="nav">
+              <li><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
+              <li><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
+            </ul>
+          </nav>
+        </Header>
+        <Footer />
       </Route>
       <Route exact path="/saved-movies">
         saved-movies
