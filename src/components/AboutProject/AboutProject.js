@@ -19,11 +19,11 @@ function AboutProject() {
         <div className="about-projects__bottom">
           <div className="about-projects__row">
             <div className="about-projects__col about-projects__col_type_timeline">1 неделя</div>
-            <div className="about-projects__col about-projects__col_type_timeline about-projects__col_bg_light">4 недели</div>
+            <div className="about-projects__col about-projects__col_width_lg about-projects__col_type_timeline about-projects__col_bg_light">4 недели</div>
           </div>
           <div className="about-projects__row">
             <div className="about-projects__col">Back-end</div>
-            <div className="about-projects__col">Front-end</div>
+            <div className="about-projects__col about-projects__col_width_lg">Front-end</div>
           </div>
         </div>
       </div>

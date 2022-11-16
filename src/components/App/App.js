@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink, Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Header from '../Header/Header';
+import Logo from '../Logo/Logo';
+import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
@@ -10,19 +12,16 @@ import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 //import ProtectedRoute from './ProtectedRoute';
 
-import './App.css';
-
 function App() {
   return (
     <Switch>
       <Route exact path="/">
         <Header>
-          <nav>
-            <ul class="nav">
-              <li><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
-              <li><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
-            </ul>
-          </nav>
+          <Logo />
+          <Nav>
+            <li className="nav__item"><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
+            <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
+          </Nav>
         </Header>
         <Promo />
         <AboutProject />
@@ -34,13 +33,13 @@ function App() {
       <Route exact path="/movies">
         <Header>
           <nav>
-            <ul class="nav">
+            <ul className="nav">
               <li><a href="#" className="nav__link">Фильмы</a></li>
               <li><a href="#" className="nav__link">Сохранённые фильмы</a></li>
             </ul>
           </nav>
           <nav>
-            <ul class="nav">
+            <ul className="nav">
               <li><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
               <li><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
             </ul>
