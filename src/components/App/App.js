@@ -23,11 +23,13 @@ function App() {
             <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
           </Nav>
         </Header>
-        <Promo />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
-        <Portfolio />
+        <Main>
+          <Promo />
+          <AboutProject />
+          <Techs />
+          <AboutMe />
+          <Portfolio />
+        </Main>
         <Footer />
       </Route>
       <Route exact path="/movies">

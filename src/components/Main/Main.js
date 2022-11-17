@@ -1,10 +1,9 @@
 import React from 'react';
 import './Main.css';
 
-function Main() {
+function Main({children}) {
   return (
-    <>
-    </>
+    <main className="content">{children}</main>
   );
 }
 

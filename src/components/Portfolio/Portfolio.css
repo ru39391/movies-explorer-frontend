@@ -21,3 +21,10 @@
   letter-spacing: -0.04em;
   text-decoration: none;
 }
+
+@media (max-width:1024px) {
+  .portfolio-list__link {
+    font-size: 28px;
+    line-height: 1.8;
+  }
+}

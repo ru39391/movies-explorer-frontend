@@ -10,13 +10,6 @@
   justify-content: space-between;
 }
 
-@media (max-width:1024px) {
-  .header {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
 @media (max-width:767px) {
   .header {
     padding-left: 14px;

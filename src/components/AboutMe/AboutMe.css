@@ -6,7 +6,14 @@
 .about__content {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   max-width: 600px;
+}
+
+@media (max-width:1024px) {
+  .about__content {
+    padding: 0 50px 0 0;
+  }
 }
 
 .about__title {
@@ -17,6 +24,14 @@
   letter-spacing: -0.04em;
 }
 
+@media (max-width:1024px) {
+  .about__title {
+    font-size: 40px;
+    line-height: 1;
+    margin: 0 0 16px;
+  }
+}
+
 .about__subtitle {
   font-size: 18px;
   font-weight: 500;
@@ -24,9 +39,25 @@
   margin: 0 0 26px;
 }
 
+@media (max-width:1024px) {
+  .about__subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+  }
+}
+
 .about__text {
   line-height: 1.6;
   margin: 0 0 30px;
+}
+
+@media (max-width:1024px) {
+  .about__text {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+  }
 }
 
 .about__footer {
