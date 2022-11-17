@@ -9,6 +9,8 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
 import Footer from '../Footer/Footer';
 //import ProtectedRoute from './ProtectedRoute';
 
@@ -56,12 +58,10 @@ function App() {
         profile
       </Route>
       <Route exact path="/signup">
-        signup
-        <NavLink to="/signin" className="header__link">Войти</NavLink>
+        <Register formTitle="Добро пожаловать!" btnCaption="Зарегистрироваться" footerText="Уже зарегистрированы?" footerTitle="Войти" footerUrl="signin" />
       </Route>
       <Route exact path="/signin">
-        signin
-        <NavLink to="/signup" className="header__link">Регистрация</NavLink>
+        <Login formTitle="Рады видеть!" btnCaption="Войти" footerText="Ещё не зарегистрированы?" footerTitle="Регистрация" footerUrl="signup" />
       </Route>
     </Switch>
   );
