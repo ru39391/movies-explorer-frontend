@@ -10,6 +10,12 @@
   margin: 0 30px 0 0;
 }
 
+@media (max-width:767px) {
+  .nav__item {
+    margin: 0 14px 0 0;
+  }
+}
+
 .nav__item:last-child {
   margin-right: 0;
 }
@@ -22,9 +28,23 @@
   text-decoration: none;
 }
 
+@media (max-width:767px) {
+  .nav__link {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}
+
 .nav__link_type_btn {
   padding: 8px 20px;
   color: #fff;
   border-radius: 3px;
   background-color: #3456F3;
+}
+
+@media (max-width:767px) {
+  .nav__link_type_btn {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }

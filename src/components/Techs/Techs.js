@@ -4,7 +4,7 @@ import './Techs.css';
 function Techs() {
   return (
     <section id="techs" className="section section_bg_light">
-      <div className="wrapper">
+      <div className="wrapper wrapper_padding_none">
         <h2 className="section__title section__title_border_bottom">Технологии</h2>
         <div className="techs">
           <article className="techs__content">

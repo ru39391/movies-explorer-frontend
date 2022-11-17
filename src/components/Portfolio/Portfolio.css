@@ -14,7 +14,7 @@
 
 .portfolio-list__link {
   flex-grow: 1;
-  margin: 0 30px 0 0;
+  margin: 0 24px 0 0;
   color: #000;
   font-size: 30px;
   line-height: 1.7;
@@ -26,5 +26,18 @@
   .portfolio-list__link {
     font-size: 28px;
     line-height: 1.8;
+  }
+}
+
+@media (max-width:767px) {
+  .portfolio-list__link {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width:767px) {
+  .portfolio-list__picture {
+    flex: 0 0 18px;
   }
 }

@@ -1,0 +1,6 @@
+@media (max-width:767px) {
+  .wrapper_padding_none {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

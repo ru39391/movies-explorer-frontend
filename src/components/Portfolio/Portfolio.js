@@ -9,15 +9,15 @@ function Portfolio() {
       <ul className="portfolio-list">
         <li className="portfolio-list__item">
           <a className="portfolio-list__link" href="https://ru39391.github.io/mesto/">Статичный сайт</a>
-          <img src={iconArrow} alt="Статичный сайт" />
+          <img className="portfolio-list__picture" src={iconArrow} alt="Статичный сайт" />
         </li>
         <li className="portfolio-list__item">
           <a className="portfolio-list__link" href="https://ru39391.github.io/mesto-react/">Адаптивный сайт</a>
-          <img src={iconArrow} alt="Адаптивный сайт" />
+          <img className="portfolio-list__picture" src={iconArrow} alt="Адаптивный сайт" />
         </li>
         <li className="portfolio-list__item">
           <a className="portfolio-list__link" href="https://ru39391.github.io/">Одностраничное приложение</a>
-          <img src={iconArrow} alt="Одностраничное приложение" />
+          <img className="portfolio-list__picture" src={iconArrow} alt="Одностраничное приложение" />
         </li>
       </ul>
     </section>

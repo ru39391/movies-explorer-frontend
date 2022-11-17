@@ -4,7 +4,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="footer">
-      <div className="wrapper">
+      <div className="wrapper wrapper_padding_none">
         <p className="footer__text">Учебный проект Яндекс.Практикум х BeatFilm.</p>
         <div className="footer__bottom">
           <p className="footer__copyright">&copy; 2020</p>

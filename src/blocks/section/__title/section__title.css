@@ -5,3 +5,9 @@
   line-height: 1.2;
   letter-spacing: -0.04em;
 }
+
+@media (max-width:767px) {
+  .section__title {
+    font-size: 18px;
+  }
+}

@@ -10,3 +10,11 @@
     padding-bottom: 90px;
   }
 }
+
+@media (max-width:767px) {
+  .section_bg_light {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    background-color: rgba(0,0,0,0);
+  }
+}

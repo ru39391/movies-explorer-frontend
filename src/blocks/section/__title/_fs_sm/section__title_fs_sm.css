@@ -3,3 +3,10 @@
   line-height: 1.1;
   letter-spacing: 0;
 }
+
+@media (max-width:767px) {
+  .section__title_fs_sm {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
