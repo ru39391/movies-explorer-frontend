@@ -58,10 +58,14 @@ function App() {
         profile
       </Route>
       <Route exact path="/signup">
-        <Register formTitle="Добро пожаловать!" btnCaption="Зарегистрироваться" footerText="Уже зарегистрированы?" footerTitle="Войти" footerUrl="signin" />
+        <div className="page__wrapper">
+          <Register formTitle="Добро пожаловать!" btnCaption="Зарегистрироваться" footerText="Уже зарегистрированы?" footerTitle="Войти" footerUrl="signin" />
+        </div>
       </Route>
       <Route exact path="/signin">
-        <Login formTitle="Рады видеть!" btnCaption="Войти" footerText="Ещё не зарегистрированы?" footerTitle="Регистрация" footerUrl="signup" />
+        <div className="page__wrapper">
+          <Login formTitle="Рады видеть!" btnCaption="Войти" footerText="Ещё не зарегистрированы?" footerTitle="Регистрация" footerUrl="signup" />
+        </div>
       </Route>
     </Switch>
   );
