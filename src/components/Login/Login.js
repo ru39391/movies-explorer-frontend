@@ -1,6 +1,5 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
-import './Login.css';
 
 function Login({formTitle, btnCaption, footerText, footerTitle, footerUrl}) {
   return (

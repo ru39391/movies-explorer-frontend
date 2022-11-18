@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Header from '../Header/Header';
-import Logo from '../Logo/Logo';
+import HeaderProfile from '../HeaderProfile/HeaderProfile';
 import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
 import Promo from '../Promo/Promo';
@@ -19,7 +19,6 @@ function App() {
     <Switch>
       <Route exact path="/">
         <Header>
-          <Logo />
           <Nav>
             <li className="nav__item"><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
             <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
@@ -35,27 +34,14 @@ function App() {
         <Footer />
       </Route>
       <Route exact path="/movies">
-        <Header>
-          <nav>
-            <ul className="nav">
-              <li><a href="#" className="nav__link">Фильмы</a></li>
-              <li><a href="#" className="nav__link">Сохранённые фильмы</a></li>
-            </ul>
-          </nav>
-          <nav>
-            <ul className="nav">
-              <li><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
-              <li><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
-            </ul>
-          </nav>
-        </Header>
+        <HeaderProfile />
         <Footer />
       </Route>
       <Route exact path="/saved-movies">
-        saved-movies
+        <HeaderProfile />
       </Route>
       <Route exact path="/profile">
-        profile
+        <HeaderProfile />
       </Route>
       <Route exact path="/signup">
         <div className="page__wrapper">

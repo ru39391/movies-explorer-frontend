@@ -1,10 +1,10 @@
 import React from 'react';
 import './Nav.css';
 
-function Nav({children}) {
+function Nav({children, className, navClassMod}) {
   return (
-    <nav>
-      <ul className="nav">
+    <nav className={className}>
+      <ul className={`nav ${navClassMod}`}>
         {children}
       </ul>
     </nav>
