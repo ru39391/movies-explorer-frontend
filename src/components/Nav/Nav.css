@@ -25,7 +25,13 @@
 
 @media (max-width:1024px) {
   .nav__item_margin_bottom {
-    margin: 0 0 28px;
+    margin: 0 0 24px;
+  }
+}
+
+@media (max-width:767px) {
+  .nav__item_margin_bottom {
+    margin: 0 0 18px;
   }
 }
 
@@ -48,12 +54,45 @@
   }
 }
 
-.nav__link_fw_normal {
+.nav__link_menu_profile {
+  display: block;
   font-weight: 400;
+}
+
+@media (max-width:1024px) {
+  .nav__link_menu_profile {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 0 0 4px;
+    border-bottom: 2px solid rgba(0,0,0,0);
+  }
+}
+
+@media (max-width:767px) {
+  .nav__link_menu_profile {
+    padding: 0 0 6px;
+  }
 }
 
 .nav__link_active {
   font-weight: 500;
+}
+
+@media (max-width:1024px) {
+  .nav__link_active {
+    border-color: #000;
+  }
+}
+
+.nav__item_linkto_main {
+  display: none;
+}
+
+@media (max-width:1024px) {
+  .nav__item_linkto_main {
+    display: block;
+  }
 }
 
 .nav__link_type_btn {
