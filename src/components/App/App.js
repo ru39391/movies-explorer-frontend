@@ -4,11 +4,9 @@ import Header from '../Header/Header';
 import HeaderProfile from '../HeaderProfile/HeaderProfile';
 import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
-import Promo from '../Promo/Promo';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
-import AboutMe from '../AboutMe/AboutMe';
-import Portfolio from '../Portfolio/Portfolio';
+import Content from '../Content/Content';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Footer from '../Footer/Footer';
@@ -24,34 +22,31 @@ function App() {
             <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
           </Nav>
         </Header>
-        <Main>
-          <Promo />
-          <AboutProject />
-          <Techs />
-          <AboutMe />
-          <Portfolio />
-        </Main>
+        <Main />
         <Footer />
       </Route>
       <Route exact path="/movies">
         <HeaderProfile />
+        <Movies />
         <Footer />
       </Route>
       <Route exact path="/saved-movies">
         <HeaderProfile />
+        <SavedMovies />
+        <Footer />
       </Route>
       <Route exact path="/profile">
         <HeaderProfile />
       </Route>
       <Route exact path="/signup">
-        <div className="page__wrapper">
+        <Content contentClassMod="content_type_column">
           <Register formTitle="Добро пожаловать!" btnCaption="Зарегистрироваться" footerText="Уже зарегистрированы?" footerTitle="Войти" footerUrl="signin" />
-        </div>
+        </Content>
       </Route>
       <Route exact path="/signin">
-        <div className="page__wrapper">
+        <Content contentClassMod="content_type_column">
           <Login formTitle="Рады видеть!" btnCaption="Войти" footerText="Ещё не зарегистрированы?" footerTitle="Регистрация" footerUrl="signup" />
-        </div>
+        </Content>
       </Route>
     </Switch>
   );

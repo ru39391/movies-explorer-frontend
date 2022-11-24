@@ -7,3 +7,10 @@
   padding-right: 30px;
   box-sizing: border-box;
 }
+
+@media (max-width:767px) {
+  .wrapper_padding_min {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
