@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, Switch, useHistory, Redirect } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import Header from '../Header/Header';
 import HeaderProfile from '../HeaderProfile/HeaderProfile';
 import Nav from '../Nav/Nav';
@@ -10,13 +10,12 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Footer from '../Footer/Footer';
-//import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <Header>
+        <Header headerClassMod="">
           <Nav>
             <li className="nav__item"><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
             <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>

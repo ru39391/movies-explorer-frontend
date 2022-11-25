@@ -2,9 +2,9 @@ import React from 'react';
 import Logo from '../Logo/Logo';
 import './Header.css';
 
-function Header({children}) {
+function Header({children, headerClassMod}) {
   return (
-    <header className="header">
+    <header className={`header ${headerClassMod}`}>
       <Logo />
       {children}
     </header>

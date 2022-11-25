@@ -1,0 +1,126 @@
+.search-form {
+  display: flex;
+  align-items: center;
+  margin: 0 0 80px;
+  padding: 0 0 80px;
+  border-bottom: 1px solid rgba(170, 170, 170, .2);
+}
+
+@media (max-width:1024px) {
+  .search-form {
+    padding: 0 0 60px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:767px) {
+  .search-form {
+    margin: 0 0 50px;
+    padding: 0 0 44px;
+  }
+}
+
+.search-form__wrapper {
+  display: flex;
+  flex-grow: 1;
+  padding: 6px;
+  margin: 0 40px 0 0;
+  box-sizing: border-box;
+  border-radius: 50px;
+  border: 1px solid rgba(170, 170, 170, .2);
+}
+
+@media (max-width:1024px) {
+  .search-form__wrapper {
+    margin: 0 0 38px;
+  }
+}
+
+@media (max-width:767px) {
+  .search-form__wrapper {
+    margin: 0 0 44px;
+  }
+}
+
+.search-form__field {
+  flex-grow: 1;
+  padding: 0 0 0 14px;
+  margin: 0 14px 0 0;
+  line-height: 1.3;
+  border: 0;
+  outline: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+@media (max-width:767px) {
+  .search-form__field {
+    font-size: 11px;
+    line-height: .6;
+  }
+}
+
+.search-form__btn {
+  flex: 0 0 34px;
+  height: 34px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  border-radius: 50%;
+  background-color: #3456F3;
+}
+
+.search-form__toggler {
+  display: none;
+}
+
+.search-form__toggler:checked + .search-form__toggler-title:before {
+  transform: translateX(20px);
+}
+
+.search-form__toggler-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+@media (max-width:1024px) {
+  .search-form__toggler-title {
+    align-self: center;
+  }
+}
+
+@media (max-width:767px) {
+  .search-form__toggler-title {
+    font-size: 11px;
+    line-height: .6;
+  }
+}
+
+.search-form__toggler-title:before {
+  content: '';
+  position: absolute;
+  top: auto;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: all .3s ease;
+}
+
+.search-form__toggler-title:after {
+  content: '';
+  width: 34px;
+  height: 14px;
+  margin: 0 0 0 14px;
+  border-radius: 20px;
+  background-color: #2BE080;
+}

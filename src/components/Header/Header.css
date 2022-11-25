@@ -18,6 +18,16 @@
   }
 }
 
+.header_margin_bottom {
+  margin-bottom: 80px;
+}
+
+@media (max-width:1024px) {
+  .header_margin_bottom {
+    margin-bottom: 60px;
+  }
+}
+
 .header__wrapper {
   flex-grow: 1;
   display: flex;
@@ -54,6 +64,7 @@
   }
 
   .header__wrapper_active {
+    z-index: 11;
     pointer-events: all;
     transform: translateX(0);
   }

@@ -17,7 +17,7 @@ function HeaderProfile() {
   };
 
   return (
-    <Header>
+    <Header headerClassMod="header_margin_bottom">
       <HeaderBtn headerBtnClassMod="" headerBtnIcon={iconNav} headerBtnTitle="Показать меню" onHandleNavActive={toggleNavClick} />
       <div className={`header__wrapper ${IsNavActive && 'header__wrapper_active'}`}>
         <HeaderBtn headerBtnClassMod="header__btn_type_close" headerBtnIcon={iconClose} headerBtnTitle="Закрыть меню" onHandleNavActive={toggleNavClick} />
