@@ -21,6 +21,9 @@ function Movies() {
       <div className="wrapper wrapper_padding_min">
         <SearchForm />
         <MoviesCardList cards={Movies} active={false} />
+        <div className="show-more">
+          <button className="show-more__btn" type="button">Ещё</button>
+        </div>
       </div>
     </Content>
   );

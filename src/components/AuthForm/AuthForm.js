@@ -5,7 +5,7 @@ import './AuthForm.css';
 
 function AuthForm({children, formTitle, btnCaption, footerText, footerTitle, footerUrl}) {
   return (
-    <section className="form form_container">
+    <section className="form form_type_container">
       <header className="form__header">
         <Logo />
       </header>

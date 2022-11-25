@@ -2,10 +2,12 @@
   display: grid;
   grid-gap: 32px;
   grid-template-columns: repeat(3,1fr);
+  margin: 0 0 60px;
 }
 
 @media (max-width:1024px) {
   .card-list {
+    margin: 0 0 85px;
     grid-row-gap: 35px;
     grid-column-gap: 24px;
     grid-template-columns: repeat(2,1fr);

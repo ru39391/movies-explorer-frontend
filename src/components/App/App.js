@@ -9,6 +9,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
+import ProfileForm from '../ProfileForm/ProfileForm';
 import Footer from '../Footer/Footer';
 
 function App() {
@@ -36,6 +37,9 @@ function App() {
       </Route>
       <Route exact path="/profile">
         <HeaderProfile />
+        <Content contentClassMod="content_type_column">
+          <ProfileForm />
+        </Content>
       </Route>
       <Route exact path="/signup">
         <Content contentClassMod="content_type_column">

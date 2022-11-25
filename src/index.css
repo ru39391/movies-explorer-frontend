@@ -9,3 +9,5 @@
 @import url(./blocks/section/__title/_fs_sm/section__title_fs_sm.css);
 @import url(./blocks/section/__title/_color_light/section__title_color_light.css);
 @import url(./blocks/section/__title/_border_bottom/section__title_border_bottom.css);
+@import url(./blocks/show-more/show-more.css);
+@import url(./blocks/show-more/__btn/show-more__btn.css);
