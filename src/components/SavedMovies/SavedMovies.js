@@ -1,26 +1,16 @@
 import React from 'react';
-import api from '../../utils/api';
 import Content from '../Content/Content';
+import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
-  const [Movies, setMoviesList] = React.useState([]);
-  React.useEffect(() => {
-    api.getInitialCards()
-    .then((res) => {
-      setMoviesList(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, []);
-
+function SavedMovies({cards, isPreloaderActive}) {
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm />
-        <MoviesCardList cards={Movies} active={true} />
+        <Preloader isPreloaderActive={isPreloaderActive} />
+        <MoviesCardList cards={cards} active={true} />
       </div>
     </Content>
   );

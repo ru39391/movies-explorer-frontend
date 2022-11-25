@@ -92,6 +92,10 @@
   color: #000;
 }
 
+.about__link:hover {
+  color: rgba(0,0,0,.7);
+}
+
 .about__picture {
   border-radius: 10px;
 }

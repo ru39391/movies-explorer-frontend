@@ -85,3 +85,7 @@
   color: #000;
   text-decoration: none;
 }
+
+.footer__link:hover {
+  color: rgba(0,0,0,.7);
+}

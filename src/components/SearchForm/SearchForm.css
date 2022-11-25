@@ -72,6 +72,11 @@
   border: 0;
   border-radius: 50%;
   background-color: #3456F3;
+  transition: all .3s ease;
+}
+
+.search-form__btn:hover {
+  background-color: rgba(52, 86, 243, .8);
 }
 
 .search-form__toggler {
@@ -79,7 +84,12 @@
 }
 
 .search-form__toggler:checked + .search-form__toggler-title:before {
+  background-color: #fff;
   transform: translateX(20px);
+}
+
+.search-form__toggler:checked + .search-form__toggler-title:after {
+  background-color: #2BE080;
 }
 
 .search-form__toggler-title {
@@ -112,7 +122,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #F5F5F5;
   transition: all .3s ease;
 }
 
@@ -122,5 +132,6 @@
   height: 14px;
   margin: 0 0 0 14px;
   border-radius: 20px;
-  background-color: #2BE080;
+  background-color: #EBEBEB;
+  transition: all .3s ease;
 }

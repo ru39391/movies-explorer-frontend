@@ -7,12 +7,10 @@ function Register({formTitle, btnCaption, footerText, footerTitle, footerUrl}) {
       <div className="form__item">
         <label className="form__label">Имя</label>
         <input className="form__field" name="name" type="text" required />
-        <div className="form__error">Что-то пошло не так...</div>
       </div>
       <div className="form__item">
         <label className="form__label">E-mail</label>
         <input className="form__field" name="email" type="email" required />
-        <div className="form__error">Что-то пошло не так...</div>
       </div>
       <div className="form__item">
         <label className="form__label">Пароль</label>

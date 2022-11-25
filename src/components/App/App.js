@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
+import api from '../../utils/api';
 import Header from '../Header/Header';
 import HeaderProfile from '../HeaderProfile/HeaderProfile';
 import Nav from '../Nav/Nav';
@@ -11,8 +12,26 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import Footer from '../Footer/Footer';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
+  const [Cards, setCardsList] = React.useState([]);
+  React.useEffect(() => {
+    api.getInitialCards()
+    .then((res) => {
+      setCardsList(res);
+      handlePreloaderVisibility();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  const [IsPreloaderVisible, setPreloaderInvisible] = React.useState(true);
+  function handlePreloaderVisibility() {
+    setPreloaderInvisible(false);
+  };
+
   return (
     <Switch>
       <Route exact path="/">
@@ -27,12 +46,12 @@ function App() {
       </Route>
       <Route exact path="/movies">
         <HeaderProfile />
-        <Movies />
+        <Movies cards={Cards} isPreloaderActive={IsPreloaderVisible} />
         <Footer />
       </Route>
       <Route exact path="/saved-movies">
         <HeaderProfile />
-        <SavedMovies />
+        <SavedMovies cards={Cards} isPreloaderActive={IsPreloaderVisible} />
         <Footer />
       </Route>
       <Route exact path="/profile">
@@ -49,6 +68,11 @@ function App() {
       <Route exact path="/signin">
         <Content contentClassMod="content_type_column">
           <Login formTitle="Рады видеть!" btnCaption="Войти" footerText="Ещё не зарегистрированы?" footerTitle="Регистрация" footerUrl="signup" />
+        </Content>
+      </Route>
+      <Route path="*">
+        <Content contentClassMod="content_type_column">
+          <PageNotFound />
         </Content>
       </Route>
     </Switch>

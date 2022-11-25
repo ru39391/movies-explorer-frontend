@@ -36,6 +36,10 @@
   }
 }
 
+.portfolio-list__link:hover {
+  color: rgba(0,0,0,.7);
+}
+
 @media (max-width:767px) {
   .portfolio-list__picture {
     flex: 0 0 18px;

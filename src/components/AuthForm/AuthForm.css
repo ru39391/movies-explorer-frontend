@@ -153,6 +153,7 @@
   margin: 0 0 16px;
   cursor: pointer;
   background-color: #3456F3;
+  transition: all .3s ease;
 }
 
 @media (max-width:767px) {
@@ -163,12 +164,27 @@
   }
 }
 
+.form__button:hover {
+  background-color: rgba(52, 86, 243, .8);
+}
+
+.form__button:disabled {
+  cursor: default;
+  color: #C2C2C2;
+  background-color: #F8F8F8;
+}
+
 .form__button_type_plain {
   padding: 0;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.2;
   color: #000;
+  background-color: rgba(0,0,0,0);
+}
+
+.form__button_type_plain:hover {
+  color: rgba(0,0,0,.7);
   background-color: rgba(0,0,0,0);
 }
 
@@ -197,4 +213,8 @@
 .form__link {
   color: #3456F3;
   text-decoration: none;
+}
+
+.form__link:hover {
+  color: rgba(52, 86, 243, .7);
 }
