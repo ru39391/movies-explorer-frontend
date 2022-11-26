@@ -6,20 +6,20 @@ function Portfolio() {
   return (
     <section className="section wrapper">
       <h2 className="section__title section__title_fs_sm section__title_color_light">Портфолио</h2>
-      <ul className="portfolio-list">
-        <li className="portfolio-list__item">
-          <a className="portfolio-list__link" href="https://ru39391.github.io/mesto/">Статичный сайт</a>
+      <div className="portfolio-list">
+        <a className="portfolio-list__link" href="https://ru39391.github.io/mesto/" target="_blank" rel="noopener noreferrer">
+          <span className="portfolio-list__text">Статичный сайт</span>
           <img className="portfolio-list__picture" src={iconArrow} alt="Статичный сайт" />
-        </li>
-        <li className="portfolio-list__item">
-          <a className="portfolio-list__link" href="https://ru39391.github.io/mesto-react/">Адаптивный сайт</a>
+        </a>
+        <a className="portfolio-list__link" href="https://ru39391.github.io/mesto-react/" target="_blank" rel="noopener noreferrer">
+          <span className="portfolio-list__text">Адаптивный сайт</span>
           <img className="portfolio-list__picture" src={iconArrow} alt="Адаптивный сайт" />
-        </li>
-        <li className="portfolio-list__item">
-          <a className="portfolio-list__link" href="https://ru39391.github.io/">Одностраничное приложение</a>
+        </a>
+        <a className="portfolio-list__link" href="https://ru39391.github.io/" target="_blank" rel="noopener noreferrer">
+          <span className="portfolio-list__text">Одностраничное приложение</span>
           <img className="portfolio-list__picture" src={iconArrow} alt="Одностраничное приложение" />
-        </li>
-      </ul>
+        </a>
+      </div>
     </section>
   );
 }

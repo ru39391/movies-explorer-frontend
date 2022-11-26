@@ -35,7 +35,7 @@
   box-sizing: border-box;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .header__wrapper {
     position: fixed;
     top: 0;
@@ -93,7 +93,7 @@
   background-color: rgba(0,0,0,0);
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .header__btn {
     display: block;
   }
@@ -116,7 +116,7 @@
   justify-content: center;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .header__nav {
     flex-direction: column;
     justify-content: flex-start;
@@ -133,7 +133,7 @@
   background-color: #F4F4F4;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .header__link {
     padding: 8px 22px;
   }

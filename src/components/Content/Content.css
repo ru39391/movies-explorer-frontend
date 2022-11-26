@@ -1,11 +1,11 @@
 .content {
   flex-grow: 1;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @media (max-width:1024px) {
   .content {
-    padding-left: 20px;
-    padding-right: 20px;
   }
 }
 

@@ -6,7 +6,7 @@
   list-style: none;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .nav_type_column {
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
   }
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .nav__item_margin_bottom {
     margin: 0 0 24px;
   }
@@ -59,7 +59,7 @@
   font-weight: 400;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .nav__link_menu_profile {
     font-size: 18px;
     font-weight: 500;
@@ -79,7 +79,7 @@
   font-weight: 500;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .nav__link_active {
     border-color: #000;
   }
@@ -89,7 +89,7 @@
   display: none;
 }
 
-@media (max-width:1024px) {
+@media (max-width:768px) {
   .nav__item_linkto_main {
     display: block;
   }

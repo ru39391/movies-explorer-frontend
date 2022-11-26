@@ -110,6 +110,11 @@
   outline: none;
   border-radius: 8px;
   background-color: #F4F4F4;
+  transition: all .3s ease;
+}
+
+.form__field:focus {
+  background-color: #F8F8F8;
 }
 
 .form__field_type_nofx {
