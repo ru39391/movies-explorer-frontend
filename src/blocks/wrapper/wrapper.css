@@ -1,0 +1,16 @@
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+  box-sizing: border-box;
+}
+
+@media (max-width:767px) {
+  .wrapper_padding_min {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
