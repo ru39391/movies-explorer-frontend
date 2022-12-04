@@ -13,6 +13,7 @@ import Register from '../Register/Register';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import Footer from '../Footer/Footer';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import Popup from '../Popup/Popup';
 
 function App() {
   const [Cards, setCardsList] = React.useState([]);
@@ -43,6 +44,7 @@ function App() {
         </Header>
         <Main />
         <Footer />
+        <Popup />
       </Route>
       <Route exact path="/movies">
         <HeaderProfile />
