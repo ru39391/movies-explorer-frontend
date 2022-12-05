@@ -5,6 +5,10 @@ import AuthFormFooter from '../AuthFormFooter/AuthFormFooter';
 import './AuthForm.css';
 
 function AuthForm({ children, formTitle, btnCaption, footerText, footerTitle, footerUrl, onSubmit, popupData, isPopupOpen, togglePopupVisibility }) {
+  const popupLinkData = {
+    title: footerTitle,
+    url: footerUrl,
+  };
   const { title, isError } = popupData;
   return (
     <>
@@ -21,7 +25,7 @@ function AuthForm({ children, formTitle, btnCaption, footerText, footerTitle, fo
           </div>
         </form>
       </section>
-      <Popup title={title} isOpen={isPopupOpen} isError={isError} onHandleVisibility={togglePopupVisibility} />
+      <Popup popupTitle={title} isOpen={isPopupOpen} isError={isError} popupLinkData={popupLinkData} onHandleVisibility={togglePopupVisibility} />
     </>
   );
 }

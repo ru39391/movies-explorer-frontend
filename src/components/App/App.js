@@ -57,12 +57,6 @@ function App() {
     setPopupData(data);
   }
 
-  function redirectToSignin(data) {
-    if(data.className === 'success') {
-      history.push('/signin');
-    }
-  }
-
   function togglePopupVisibility() {
     if(IsPopupOpen) {
       setPopupVisibility(false);

@@ -1,10 +1,12 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import iconClose from '../../images/icon-close.svg';
 import iconError from '../../images/icon-error.svg';
 import iconSuccess from '../../images/icon-success.svg';
 import './Popup.css';
 
-function Popup({title, isOpen, isError, onHandleVisibility}) {
+function Popup({ popupTitle, isOpen, isError, popupLinkData, onHandleVisibility }) {
+  const { title, url } = popupLinkData;
   return (
     <div className={`popup ${isOpen && 'popup_active'} ${isError && 'popup_type_error'}`}>
       <div className="popup__wrapper">
@@ -14,7 +16,8 @@ function Popup({title, isOpen, isError, onHandleVisibility}) {
         <div className="popup__header">
           <img src={isError ? iconError : iconSuccess} alt={title} />
         </div>
-        <p className="popup__title">{title}</p>
+        <p className="popup__title">{popupTitle}</p>
+        {!isError && <NavLink to={`/${url}`} className="popup__link" onClick={onHandleVisibility}>{title}</NavLink>}
       </div>
     </div>
   );
