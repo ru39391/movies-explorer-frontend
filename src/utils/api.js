@@ -1,5 +1,5 @@
 import React from 'react';
-import { cardsUrl } from './constants';
+import { access } from './constants';
 
 class Api extends React.Component {
   constructor(baseUrl) {
@@ -15,21 +15,17 @@ class Api extends React.Component {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  _setHeaders() {
-    return {
-      'Content-Type': 'application/json'
-    };
-  }
-
-  getInitialCards(jwt) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/beatfilm-movies`, {
       method: 'GET',
-      headers: this._setHeaders()
+      headers: {
+        'Content-Type': 'application/json'
+      },
     })
       .then((res) => {return this._checkResponse(res, 'Ошибка при загрузке карточек')});
   }
 }
 
-const api = new Api(cardsUrl);
+const api = new Api(access.cardsUrl);
 
 export default api;

@@ -1,10 +1,11 @@
 import React from 'react';
-import { cardsUrl } from '../../utils/constants';
+import { access } from '../../utils/constants';
 import iconChecked from '../../images/icon-checked.svg';
 import iconRemove from '../../images/icon-remove.svg';
 import './MoviesCard.css';
 
 function MoviesCard({card, nameRU, duration, image, active}) {
+  const { cardsUrl } = access;
   return (
     <article className="card">
       <header className="card__header">

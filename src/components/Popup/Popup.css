@@ -24,6 +24,10 @@
   pointer-events: all;
 }
 
+.popup_type_error {
+  color: #EE3465;
+}
+
 .popup__wrapper {
   display: flex;
   flex-direction: column;
@@ -58,5 +62,4 @@
   margin: 0;
   font-size: 16px;
   line-height: 1.4;
-  color: #EE3465;
 }
