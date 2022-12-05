@@ -38,14 +38,15 @@ class Auth extends React.Component {
   }
 
   getUserToken(jwt) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization' : `Bearer ${jwt}`
       }
     })
-      .then(res => this._checkResponse(res, 'Ошибка при получении JSON Web Token'));
+      .then(res => this._checkResponse(res));
+      //, 'Ошибка при получении JSON Web Token'
   }
 }
 

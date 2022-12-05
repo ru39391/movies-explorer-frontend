@@ -24,7 +24,7 @@ function Register({ formTitle, btnCaption, footerText, footerTitle, footerUrl, p
   }, [isError]);
 
   return (
-    <AuthForm formTitle={formTitle} btnCaption={btnCaption} footerText={footerText} footerTitle={footerTitle} footerUrl={footerUrl} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} onSubmit={handleSubmit} >
+    <AuthForm formTitle={formTitle} btnCaption={btnCaption} footerText={footerText} footerTitle={footerTitle} footerUrl={footerUrl} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} onSubmit={handleSubmit}>
       <div className="form__item">
         <label className="form__label">Имя</label>
         <input className="form__field" name="name" type="text" value={RegisterFormData.name || ''} onChange={handleChange} required />

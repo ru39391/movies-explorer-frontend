@@ -12,5 +12,5 @@ export const signupConfig = {
 
 export const signinConfig = {
   endPoint: 'signin',
-  errorAlert: 'Неверный логин или пароль'
+  errorMess: 'Неверный логин или пароль'
 }

@@ -1,9 +1,7 @@
 import React from 'react';
-import { NavLink, Route, Switch, useHistory, Redirect } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import Header from '../Header/Header';
-import HeaderProfile from '../HeaderProfile/HeaderProfile';
-import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
 import Content from '../Content/Content';
 import Movies from '../Movies/Movies';
@@ -22,11 +20,10 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function App() {
   const history = useHistory();
-  const [CurrentUser, setCurrentUser] = React.useState({
-    id: null,
-    name: '',
-    email: ''
-  });
+  const [CurrentUser, setCurrentUser] = React.useState({});
+  function handleCurrentUser(data) {
+    setCurrentUser(data);
+  };
 
   const [Cards, setCardsList] = React.useState([]);
   React.useEffect(() => {
@@ -71,11 +68,6 @@ function App() {
     setLoggedIn(true);
   };
 
-  const [UserData, setUserData] = React.useState({});
-  function handleUserData(data) {
-    setUserData(data);
-  };
-
   function signUp(data) {
     auth.authUser(data, signupConfig)
       .then(res => {
@@ -112,33 +104,35 @@ function App() {
       })
       .catch(err => {
         console.log(err);
+        const { errorMess } = signinConfig;
         setPopupParams({
           isError: true,
-          title: 'error'
+          title: errorMess
         });
         togglePopupVisibility();
       });
   }
 
-  function signOut(){
+  function signOut() {
     localStorage.removeItem('token');
     history.push('/signin');
   }
 
   function checkToken() {
     const jwt = localStorage.getItem('token');
-    console.log(jwt);
+    console.log(`jwt: ${jwt}`);
     if(jwt) {
       auth.getUserToken(jwt)
         .then(res => {
-          console.log(res.data);
-          const {_id, email} = res.data;
-          handleUserData({
+          console.log(res);
+          const { _id, email, name } = res;
+          handleCurrentUser({
             id: _id,
-            email: email
+            email: email,
+            name: name
           });
           handleLoggedIn();
-          history.push('/');
+          history.push('/profile');
         })
         .catch(err => {
           console.log(err);
@@ -154,27 +148,22 @@ function App() {
     <CurrentUserContext.Provider value={CurrentUser}>
       <Switch>
         <Route exact path="/">
-          <Header headerClassMod="">
-            <Nav>
-              <li className="nav__item"><NavLink to="/signup" className="nav__link">Регистрация</NavLink></li>
-              <li className="nav__item"><NavLink to="/signin" className="nav__link nav__link_type_btn">Войти</NavLink></li>
-            </Nav>
-          </Header>
+          <Header isLoggedIn={IsLoggedIn} />
           <Main />
           <Footer />
         </Route>
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
-          <HeaderProfile />
+          <Header isLoggedIn={IsLoggedIn} />
           <Movies cards={Cards} isPreloaderActive={IsPreloaderVisible} />
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/saved-movies" isLoggedIn={IsLoggedIn}>
-          <HeaderProfile />
+          <Header isLoggedIn={IsLoggedIn} />
           <SavedMovies cards={Cards} isPreloaderActive={IsPreloaderVisible} />
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>
-          <HeaderProfile />
+          <Header isLoggedIn={IsLoggedIn} />
           <Content contentClassMod="content_type_column">
             <ProfileForm />
           </Content>

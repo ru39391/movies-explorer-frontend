@@ -1,9 +1,12 @@
 import React from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function ProfileForm() {
+  const { name, email } = React.useContext(CurrentUserContext);
+
   return (
     <section className="form form_type_container form_width_wide">
-      <h1 className="form__title form__title_align_center form__title_margin_bottom">Привет, Виталий!</h1>
+      <h1 className="form__title form__title_align_center form__title_margin_bottom">Привет, {name}!</h1>
       <form className="form__body">
         <fieldset className="form__wrapper">
           <div className="form__item form__item_type_row form__item_border_bottom">

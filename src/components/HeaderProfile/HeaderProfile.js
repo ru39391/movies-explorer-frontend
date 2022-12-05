@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import Header from '../Header/Header';
 import HeaderBtn from '../HeaderBtn/HeaderBtn';
 import Nav from '../Nav/Nav';
 import iconNav from '../../images/icon-nav.svg';
@@ -17,7 +16,7 @@ function HeaderProfile() {
   };
 
   return (
-    <Header headerClassMod="header_margin_bottom">
+    <>
       <HeaderBtn headerBtnClassMod="" headerBtnIcon={iconNav} headerBtnTitle="Показать меню" onHandleNavActive={toggleNavClick} />
       <div className={`header__wrapper ${IsNavActive && 'header__wrapper_active'}`}>
         <HeaderBtn headerBtnClassMod="header__btn_type_close" headerBtnIcon={iconClose} headerBtnTitle="Закрыть меню" onHandleNavActive={toggleNavClick} />
@@ -34,7 +33,7 @@ function HeaderProfile() {
         </Nav>
         <NavLink to="/profile" className="header__link" onClick={toggleNavClick}>Аккаунт</NavLink>
       </div>
-    </Header>
+    </>
   );
 }
 

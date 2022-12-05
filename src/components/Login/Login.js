@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 
-function Login({ formTitle, btnCaption, footerText, footerTitle, footerUrl, handleForm, popupData, isPopupOpen, togglePopupVisibility }) {
+function Login({ formTitle, btnCaption, footerText, footerTitle, footerUrl, popupData, isPopupOpen, togglePopupVisibility, handleForm }) {
   const [LoginFormData, setLoginFormData] = React.useState({});
   function handleChange(e) {
     const { name, value } = e.target;
@@ -17,12 +17,8 @@ function Login({ formTitle, btnCaption, footerText, footerTitle, footerUrl, hand
     handleForm(LoginFormData);
   } 
 
-  React.useEffect(() => {
-    setLoginFormData({});
-  }, []);
-
   return (
-    <AuthForm formTitle={formTitle} btnCaption={btnCaption} footerText={footerText} footerTitle={footerTitle} footerUrl={footerUrl} onSubmit={handleSubmit} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility}>
+    <AuthForm formTitle={formTitle} btnCaption={btnCaption} footerText={footerText} footerTitle={footerTitle} footerUrl={footerUrl} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} onSubmit={handleSubmit}>
       <div className="form__item">
         <label className="form__label">E-mail</label>
         <input className="form__field" name="email" type="email" value={LoginFormData.email || ''} onChange={handleChange} required />
