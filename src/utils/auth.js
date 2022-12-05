@@ -26,6 +26,13 @@ class Auth extends React.Component {
     return body;
   }
 
+  _setHeadersAuthorized(jwt) {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization' : `Bearer ${jwt}`
+    };
+  }
+
   authUser(data, config) {
     return fetch(`${this._baseUrl}${config.endPoint}`, {
       method: 'POST',
@@ -40,13 +47,18 @@ class Auth extends React.Component {
   getUserToken(jwt) {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization' : `Bearer ${jwt}`
-      }
+      headers: this._setHeadersAuthorized(jwt)
     })
       .then(res => this._checkResponse(res));
-      //, 'Ошибка при получении JSON Web Token'
+  }
+
+  setUserData(data, jwt) {
+    return fetch(`${this._baseUrl}users/me`, {
+      method: 'PATCH',
+      headers: this._setHeadersAuthorized(jwt),
+      body: JSON.stringify(this._setBody(data))
+    })
+      .then(res => this._checkResponse(res));
   }
 }
 

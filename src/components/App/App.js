@@ -113,6 +113,17 @@ function App() {
       });
   }
 
+  function profileEdit(data) {
+    const jwt = localStorage.getItem('token');
+    auth.setUserData(data, jwt)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   function signOut() {
     localStorage.removeItem('token');
     history.push('/signin');
@@ -165,7 +176,7 @@ function App() {
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <Content contentClassMod="content_type_column">
-            <ProfileForm />
+            <ProfileForm handleForm={profileEdit} />
           </Content>
         </ProtectedRoute>
         <Route exact path="/signup">
