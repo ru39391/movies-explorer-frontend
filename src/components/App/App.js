@@ -67,6 +67,9 @@ function App() {
   function handleLoggedIn() {
     setLoggedIn(true);
   };
+  function handleLoggedOut() {
+    setLoggedIn(false);
+  };
 
   function signUp(data) {
     auth.authUser(data, signupConfig)
@@ -118,6 +121,11 @@ function App() {
     auth.setUserData(data, jwt)
       .then(res => {
         console.log(res);
+        const { name, email } = res;
+        handleCurrentUser({
+          name: name,
+          email: email
+        });
       })
       .catch(err => {
         console.log(err);
@@ -125,13 +133,13 @@ function App() {
   }
 
   function signOut() {
+    handleLoggedOut();
     localStorage.removeItem('token');
     history.push('/signin');
   }
 
   function checkToken() {
     const jwt = localStorage.getItem('token');
-    console.log(`jwt: ${jwt}`);
     if(jwt) {
       auth.getUserToken(jwt)
         .then(res => {
@@ -176,7 +184,7 @@ function App() {
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <Content contentClassMod="content_type_column">
-            <ProfileForm handleForm={profileEdit} />
+            <ProfileForm handleForm={profileEdit} handleLogout={signOut} isLoggedIn={IsLoggedIn} />
           </Content>
         </ProtectedRoute>
         <Route exact path="/signup">
