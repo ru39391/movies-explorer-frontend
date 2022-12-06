@@ -44,16 +44,16 @@ class Auth extends React.Component {
       .then(res => this._checkResponse(res));
   }
 
-  getUserToken(jwt) {
-    return fetch(`${this._baseUrl}users/me`, {
+  getUserToken(jwt, config) {
+    return fetch(`${this._baseUrl}${config.endPoint}`, {
       method: 'GET',
       headers: this._setHeadersAuthorized(jwt)
     })
       .then(res => this._checkResponse(res));
   }
 
-  setUserData(data, jwt) {
-    return fetch(`${this._baseUrl}users/me`, {
+  setUserData(data, jwt, config) {
+    return fetch(`${this._baseUrl}${config.endPoint}`, {
       method: 'PATCH',
       headers: this._setHeadersAuthorized(jwt),
       body: JSON.stringify(this._setBody(data))

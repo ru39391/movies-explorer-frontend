@@ -5,8 +5,7 @@ import iconError from '../../images/icon-error.svg';
 import iconSuccess from '../../images/icon-success.svg';
 import './Popup.css';
 
-function Popup({ popupTitle, isOpen, isError, popupLinkData, onHandleVisibility }) {
-  const { title, url } = popupLinkData;
+function Popup({ popupTitle, isOpen, isError, popupLinkTitle, popupLinkUrl, onHandleVisibility }) {
   return (
     <div className={`popup ${isOpen && 'popup_active'} ${isError && 'popup_type_error'}`}>
       <div className="popup__wrapper">
@@ -14,10 +13,10 @@ function Popup({ popupTitle, isOpen, isError, popupLinkData, onHandleVisibility 
           <img src={iconClose} alt="Закрыть окно" />
         </button>
         <div className="popup__header">
-          <img src={isError ? iconError : iconSuccess} alt={title} />
+          <img src={isError ? iconError : iconSuccess} alt={popupTitle} />
         </div>
         <p className="popup__title">{popupTitle}</p>
-        {!isError && <NavLink to={`/${url}`} className="popup__link" onClick={onHandleVisibility}>{title}</NavLink>}
+        {!isError && <NavLink to={`/${popupLinkUrl}`} className="popup__link" onClick={onHandleVisibility}>{popupLinkTitle}</NavLink>}
       </div>
     </div>
   );

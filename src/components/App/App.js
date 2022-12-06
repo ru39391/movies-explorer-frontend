@@ -14,7 +14,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 
 import api from '../../utils/api';
 import auth from '../../utils/auth';
-import { signupConfig, signinConfig } from '../../utils/constants';
+import { signupConfig, signinConfig, profileEditConfig } from '../../utils/constants';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -74,7 +74,7 @@ function App() {
   function signUp(data) {
     auth.authUser(data, signupConfig)
       .then(res => {
-        console.log(res);
+        //console.log(res);
         const { succesMess } = signupConfig;
         setPopupParams({
           isError: false,
@@ -97,7 +97,7 @@ function App() {
   function signIn(data) {
     auth.authUser(data, signinConfig)
       .then(res => {
-        console.log(res);
+        //console.log(res);
         if(res.token) {
           const { token } = res;
           localStorage.setItem('token', token);
@@ -118,17 +118,30 @@ function App() {
 
   function profileEdit(data) {
     const jwt = localStorage.getItem('token');
-    auth.setUserData(data, jwt)
+    auth.setUserData(data, jwt, profileEditConfig)
       .then(res => {
-        console.log(res);
+        //console.log(res);
         const { name, email } = res;
+        const { succesMess } = profileEditConfig;
         handleCurrentUser({
           name: name,
           email: email
         });
+        setPopupParams({
+          isError: false,
+          title: succesMess
+        });
+        togglePopupVisibility();
       })
       .catch(err => {
         console.log(err);
+        const { status } = err;
+        const { conflictErrorMess, validationErrorMess } = profileEditConfig;
+        setPopupParams({
+          isError: true,
+          title: status === 409 ? conflictErrorMess : validationErrorMess,
+        });
+        togglePopupVisibility();
       });
   }
 
@@ -141,9 +154,9 @@ function App() {
   function checkToken() {
     const jwt = localStorage.getItem('token');
     if(jwt) {
-      auth.getUserToken(jwt)
+      auth.getUserToken(jwt, profileEditConfig)
         .then(res => {
-          console.log(res);
+          //console.log(res);
           const { _id, email, name } = res;
           handleCurrentUser({
             id: _id,
@@ -184,7 +197,7 @@ function App() {
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <Content contentClassMod="content_type_column">
-            <ProfileForm handleForm={profileEdit} handleLogout={signOut} isLoggedIn={IsLoggedIn} />
+            <ProfileForm handleForm={profileEdit} handleLogout={signOut} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </Content>
         </ProtectedRoute>
         <Route exact path="/signup">

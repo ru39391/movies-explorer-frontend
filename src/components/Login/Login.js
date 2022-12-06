@@ -13,7 +13,6 @@ function Login({ formTitle, btnCaption, footerText, footerTitle, footerUrl, popu
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(LoginFormData);
     handleForm(LoginFormData);
   } 
 
