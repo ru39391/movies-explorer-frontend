@@ -25,7 +25,7 @@ function ProfileForm({ handleForm, handleLogout, popupData, isPopupOpen, toggleP
       name: name,
       email: email
     });
-  }, [currentUser]);
+  }, [name, email]);
 
   return (
     <>

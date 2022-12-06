@@ -2,9 +2,10 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-function MoviesCardList({cards, active}) {
+function MoviesCardList({ cards, isNoResults, active }) {
   return (
-    <div className="card-list">
+    <div className={`card-list ${isNoResults && 'card-list_noresults'}`}>
+      {isNoResults && 'Ничего не найдено'}
       {cards.map((cardsItem) => (
         <MoviesCard
           card={cardsItem}

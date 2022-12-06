@@ -19,3 +19,9 @@
     display: inherit;
   }
 }
+
+.card-list_noresults {
+  font-size: 18px;
+  text-align: center;
+  display: inherit;
+}

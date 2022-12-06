@@ -1,7 +1,7 @@
 import React from 'react';
 import { access } from './constants';
 
-class Api extends React.Component {
+class MoviesApi extends React.Component {
   constructor(baseUrl) {
     super();
     this._baseUrl = baseUrl;
@@ -26,6 +26,6 @@ class Api extends React.Component {
   }
 }
 
-const api = new Api(access.cardsUrl);
+const moviesApi = new MoviesApi(access.cardsUrl);
 
-export default api;
+export default moviesApi;

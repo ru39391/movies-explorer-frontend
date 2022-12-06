@@ -52,10 +52,6 @@
   padding: 20px;
 }
 
-.preloader_invisible {
-  display: none;
-}
-
 .preloader__container {
   width: 100px;
   height: 100px;
