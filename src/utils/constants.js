@@ -1,3 +1,5 @@
+const SHORT_MOVIE_DURATION = 40;
+
 export const access = {
   authUrl: 'https://api.ru39391-d.students.nomoredomains.icu/',
   cardsUrl: 'https://api.nomoreparties.co',
@@ -21,3 +23,7 @@ export const profileEditConfig = {
   conflictErrorMess: 'Пользователь с таким email уже существует',
   validationErrorMess: 'При обновлении профиля произошла ошибка'
 }
+
+export {
+  SHORT_MOVIE_DURATION
+};

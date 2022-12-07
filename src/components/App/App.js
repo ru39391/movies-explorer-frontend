@@ -28,15 +28,6 @@ function App() {
   };
 
   const [Cards, setCardsList] = React.useState([]);
-  React.useEffect(() => {
-    moviesApi.getInitialCards()
-    .then((res) => {
-      setCardsList(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, []);
 
   const [IsPreloaderVisible, setPreloaderVisibility] = React.useState(false);
   function handlePreloaderVisibility(value) {
@@ -103,7 +94,7 @@ function App() {
           const { token } = res;
           localStorage.setItem('token', token);
           handleLoggedIn();
-          history.push('/profile');
+          history.push('/movies');
         }
       })
       .catch(err => {
@@ -165,7 +156,7 @@ function App() {
             name: name
           });
           handleLoggedIn();
-          history.push('/profile');
+          history.push('/movies');
         })
         .catch(err => {
           console.log(err);
@@ -175,6 +166,13 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
+    moviesApi.getInitialCards()
+    .then((res) => {
+      setCardsList(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }, [IsLoggedIn]);
 
   return (

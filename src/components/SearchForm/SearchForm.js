@@ -2,18 +2,23 @@ import React from 'react';
 import iconSearch from '../../images/icon-search.svg';
 import './SearchForm.css';
 
-function SearchForm({ handleForm, handlePreloaderVisibility }) {
-  const [SearchFormTitle, setSearchFormTitle] = React.useState(localStorage.getItem('searchFormTitle'));
-  const [SearchFormToggler, setSearchFormToggler] = React.useState(Boolean(localStorage.getItem('searchFormToggler')));
+function SearchForm({ handleForm, handlePreloaderVisibility, userId }) {
+  const movieTitle = Boolean(localStorage.getItem(`movies_title_${userId}`)) ? localStorage.getItem(`movies_title_${userId}`) : '';
+  const movieShort = localStorage.getItem(`movies_short_${userId}`) ? localStorage.getItem(`movies_short_${userId}`) : false;
+
+  const [SearchFormTitle, setSearchFormTitle] = React.useState(movieTitle);
+  const [SearchFormToggler, setSearchFormToggler] = React.useState(movieShort);
 
   function handleChangeTitle(e) {
     const { value } = e.target;
     setSearchFormTitle(value);
+    localStorage.setItem(`movies_title_${userId}`, value);
   };
 
   function handleChangeToggler(e) {
     const { checked } = e.target;
     setSearchFormToggler(checked);
+    localStorage.setItem(`movies_short_${userId}`, checked);
   };
 
   function handleSubmit(e) {
@@ -33,7 +38,7 @@ function SearchForm({ handleForm, handlePreloaderVisibility }) {
           <img src={iconSearch} alt="Поиск" />
         </button>
       </div>
-      <input className="search-form__toggler" id="short" name="short" value={SearchFormToggler || ''} onChange={handleChangeToggler} type="checkbox" />
+      <input className="search-form__toggler" id="short" name="short" value={SearchFormToggler || ''} onChange={handleChangeToggler} type="checkbox" checked={SearchFormToggler && `checked`} />
       <label className="search-form__toggler-title" for="short">Короткометражки</label>
     </form>
   );
