@@ -10,10 +10,10 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 function Movies({ cards, handlePreloaderVisibility }) {
   const { id } = React.useContext(CurrentUserContext);
   const IsPreloaderVisible = React.useContext(PreloaderContext);
-  const moviesArr = Boolean(JSON.parse(localStorage.getItem(`movies_arr_${id}`)).length) ? JSON.parse(localStorage.getItem(`movies_arr_${id}`)) : [];
+  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${id}`));
 
-  const [CardResults, setCardResults] = React.useState(moviesArr);
-  const [IsNoResults, setNoResults] = React.useState(false);
+  const [CardResults, setCardResults] = React.useState(Boolean(savedMoviesArr.length) ? savedMoviesArr : []);
+  const [IsNoResults, setNoResults] = React.useState(Array.isArray(savedMoviesArr) && !savedMoviesArr.length);
 
   function setPreloaderInvisible() {
     handlePreloaderVisibility(false);
@@ -52,7 +52,7 @@ function Movies({ cards, handlePreloaderVisibility }) {
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} userId={id} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CardResults} isNoResults={moviesArr.length} active={false} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CardResults} isNoResults={IsNoResults} active={false} />}
         <div className="show-more">
           <button className="show-more__btn" type="button">Ещё</button>
         </div>

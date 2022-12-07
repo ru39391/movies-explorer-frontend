@@ -4,8 +4,8 @@ import './MoviesCardList.css';
 
 function MoviesCardList({ cards, isNoResults, active }) {
   return (
-    <div className={`card-list ${!isNoResults && 'card-list_noresults'}`}>
-      {!isNoResults && 'Ничего не найдено'}
+    <div className={`card-list ${isNoResults && 'card-list_noresults'}`}>
+      {isNoResults && 'Ничего не найдено'}
       {cards.map((cardsItem) => (
         <MoviesCard
           card={cardsItem}
