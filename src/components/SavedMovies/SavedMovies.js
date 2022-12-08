@@ -31,7 +31,7 @@ function SavedMovies({ cards, handlePreloaderVisibility }) {
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchCards} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle="" movieShort={false} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={searchResults.cards} isNoResults={searchResults.isNoResults} loaderData={false} active={false} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={searchResults.cards} isNoResults={searchResults.isNoResults} loaderData="" active={false} />}
       </div>
     </Content>
   );

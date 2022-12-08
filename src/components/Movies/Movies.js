@@ -15,6 +15,7 @@ function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
   const { desktopData, tabletData, mobileData } = gridParamsData;  
 
   const [IsNoResults, setNoResults] = React.useState(false);
+  const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);
   const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
   const [DocumentWidth, setDocumentWidth] = React.useState(document.body.scrollWidth);
   const [CurrentUserSearchResults, setCurrentUserSearchResults] = React.useState({
@@ -92,6 +93,13 @@ function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
     Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
   }
 
+  function addCards() {
+    setCardLoaderParams({
+      length: CardLoaderParams.length + CardLoaderParams.increment,
+      increment: CardLoaderParams.increment
+    });
+  }
+
   function handleCard(data) {
     handleUserCard(data);
   }
@@ -99,6 +107,10 @@ function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
   React.useEffect(() => {
     setPreloaderInvisible();
   }, [CurrentUserSearchResults.movies]);
+
+  React.useEffect(() => {
+    CurrentUserSearchResults.movies.length <= CardLoaderParams.length ? setCardLoaderInvisible(true) : setCardLoaderInvisible(false);
+  }, [CardLoaderParams, CurrentUserSearchResults.movies]);
 
   React.useEffect(() => {
     handleResize();
@@ -113,6 +125,9 @@ function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
         {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} isNoResults={IsNoResults} loaderData={CardLoaderParams} handleCard={handleCard} active={false} />}
+        <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
+          <button className="show-more__btn" type="button" onClick={addCards}>Ещё</button>
+        </div>
       </div>
     </Content>
   );

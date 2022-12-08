@@ -6,12 +6,14 @@ import iconRemove from '../../images/icon-remove.svg';
 import './MoviesCard.css';
 
 function MoviesCard({card, nameRU, duration, image, trailerLink, handleCard, active, index}) {
+  const { moviesUrl } = access;
   const currentUserId = React.useContext(CurrentUserContext).id;
 
-  const { moviesUrl } = access;
-  const { url, formats } = image;
+  const { formats, url } = image;
   const { country, director, year, description, nameEN, id } = card;
-
+  const picture = Boolean(image.url) ? `${moviesUrl}${url}` : image;
+  //const picture = Boolean(image.url) ? `${moviesUrl}${url}` : image;
+  
   function toggleCard() {
     handleCard({
       country,
@@ -19,11 +21,11 @@ function MoviesCard({card, nameRU, duration, image, trailerLink, handleCard, act
       duration,
       year,
       description,
-      image: `${moviesUrl}${url}`,
+      image: picture,
       trailerLink,
       nameRU,
       nameEN,
-      thumbnail: `${moviesUrl}${formats.thumbnail.url}`,
+      //thumbnail: `${moviesUrl}${formats.thumbnail.url}`,
       movieId: id
     });
   }
@@ -35,7 +37,7 @@ function MoviesCard({card, nameRU, duration, image, trailerLink, handleCard, act
         <span className="card__duration">{duration} минут</span>
       </header>
       <a className="card__link" href={trailerLink} target="_blank" rel="noopener noreferrer">
-        <img className="card__picture" src={`${moviesUrl}${url}`} alt={nameRU} />
+        <img className="card__picture" src={picture} alt={nameRU} />
       </a>
       <footer className="card__footer">
         <button className={`card__btn ${active && 'card__btn_active'}`} type="button" onClick={toggleCard}>
