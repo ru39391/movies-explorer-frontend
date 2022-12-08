@@ -11,7 +11,7 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
-  const { desktopPoint, tabletPoint, mobilePoint } = breakPointsData;
+  const { desktopPoint, mobilePoint } = breakPointsData;
   const { desktopData, tabletData, mobileData } = gridParamsData;  
 
   const [IsNoResults, setNoResults] = React.useState(false);
@@ -34,8 +34,8 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
       short: checkParam(JSON.parse(localStorage.getItem(`movies_short_${userId}`)), CurrentUserSearchResults.short),
       movies: checkParam(localMoviesArr, CurrentUserSearchResults.movies)
     }
-    setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
     setCurrentUserSearchResults(localStorageData);
+    setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
   }
 
   function handleResize() {
@@ -87,7 +87,6 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   }
 
   function searchMovies(data) {
-    console.log(setSearchResults(data, cards, currentUserId));
     const { title, short, movies } = setSearchResults(data, cards, currentUserId);
     setCurrentUserSearchResults({ title, short, movies });
     Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
@@ -104,7 +103,6 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   React.useEffect(() => {
     checkLocalParams(currentUserId);
   }, [currentUserId]);
-  console.log(CardLoaderParams);
 
   return (
     <Content contentClassMod="content_padding_none">

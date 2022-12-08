@@ -10,7 +10,7 @@ function MoviesCardList({ cards, isNoResults, loaderData, active }) {
     length: desktopData.length,
     increment: desktopData.increment
   });
-  const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(false);
+  const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);
 
   const filtredCards = cards.filter((item, index) => index < LoaderData.length);
   function addCards() {
