@@ -2,23 +2,18 @@ import React from 'react';
 import iconSearch from '../../images/icon-search.svg';
 import './SearchForm.css';
 
-function SearchForm({ handleForm, handlePreloaderVisibility, userId }) {
-  const movieTitle = Boolean(localStorage.getItem(`movies_title_${userId}`)) ? localStorage.getItem(`movies_title_${userId}`) : '';
-  const movieShort = localStorage.getItem(`movies_short_${userId}`) ? JSON.parse(localStorage.getItem(`movies_short_${userId}`)) : false;
-
-  const [SearchFormTitle, setSearchFormTitle] = React.useState(movieTitle);
-  const [SearchFormShortMovie, setSearchFormShortMovie] = React.useState(movieShort);
+function SearchForm({ handleForm, handlePreloaderVisibility, movieTitle, movieShort }) {
+  const [SearchFormTitle, setSearchFormTitle] = React.useState('');
+  const [SearchFormShortMovie, setSearchFormShortMovie] = React.useState(false);
 
   function handleChangeTitle(e) {
     const { value } = e.target;
     setSearchFormTitle(value);
-    localStorage.setItem(`movies_title_${userId}`, value);
   };
 
   function handleChangeToggler(e) {
     const { checked } = e.target;
     setSearchFormShortMovie(checked);
-    localStorage.setItem(`movies_short_${userId}`, checked);
   };
 
   function handleSubmit(e) {
@@ -29,6 +24,11 @@ function SearchForm({ handleForm, handlePreloaderVisibility, userId }) {
     });
     handlePreloaderVisibility(true);
   }
+
+  React.useEffect(() => {
+    setSearchFormTitle(movieTitle);
+    setSearchFormShortMovie(movieShort);
+  }, [movieTitle, movieShort]);
 
   return (
     <form className="search-form" onSubmit={handleSubmit}>

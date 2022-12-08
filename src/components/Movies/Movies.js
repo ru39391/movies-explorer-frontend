@@ -12,13 +12,31 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
   const { desktopPoint, tabletPoint, mobilePoint } = breakPointsData;
-  const { desktopData, tabletData, mobileData } = gridParamsData;
-  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${currentUserId}`));
+  const { desktopData, tabletData, mobileData } = gridParamsData;  
 
+  const [IsNoResults, setNoResults] = React.useState(false);
   const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
   const [DocumentWidth, setDocumentWidth] = React.useState(document.body.scrollWidth);
-  const [MoviesResults, setMoviesResults] = React.useState(Boolean(savedMoviesArr) ? savedMoviesArr : []);
-  const [IsNoResults, setNoResults] = React.useState(Array.isArray(savedMoviesArr) && !savedMoviesArr.length);
+  const [CurrentUserSearchResults, setCurrentUserSearchResults] = React.useState({
+    title: '',
+    short: false,
+    movies: [],
+  });
+
+  function checkParam(param, defaultValue) {
+    return Boolean(param) ? param : defaultValue;
+  }
+  
+  function checkLocalParams(userId) {
+    const localMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${userId}`));
+    const localStorageData = {
+      title: checkParam(localStorage.getItem(`movies_title_${userId}`), CurrentUserSearchResults.title),
+      short: checkParam(JSON.parse(localStorage.getItem(`movies_short_${userId}`)), CurrentUserSearchResults.short),
+      movies: checkParam(localMoviesArr, CurrentUserSearchResults.movies)
+    }
+    setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
+    setCurrentUserSearchResults(localStorageData);
+  }
 
   function handleResize() {
     setTimeout(() => {
@@ -28,7 +46,7 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
           setCardLoaderParams(desktopData);
         }
     
-        if(DocumentWidth > mobilePoint && DocumentWidth <= tabletPoint) {
+        if(DocumentWidth > mobilePoint && DocumentWidth <= desktopPoint) {
           setCardLoaderParams(tabletData);
         }
     
@@ -51,36 +69,48 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
     return value ? arr.filter(item => item.duration <= SHORT_MOVIE_DURATION) : arr;
   };
 
-  function saveSearchResults(userId, arr) {
+  function saveSearchResults(userId, value, checked, arr) {
+    localStorage.setItem(`movies_title_${userId}`, value);
+    localStorage.setItem(`movies_short_${userId}`, checked);
     localStorage.setItem(`movies_arr_${userId}`, JSON.stringify(arr));
+    return {
+      title: localStorage.getItem(`movies_title_${userId}`),
+      short: JSON.parse(localStorage.getItem(`movies_short_${userId}`)),
+      movies: JSON.parse(localStorage.getItem(`movies_arr_${userId}`)),
+    };
   };
 
   function setSearchResults(data, arr, userId) {
     const { title, short } = data;
     const searchResultsArr = short ? getMoviesByDuration(short, getMoviesByTitle(title, arr)) : getMoviesByTitle(title, arr);
-    saveSearchResults(userId, searchResultsArr);
-    return JSON.parse(localStorage.getItem(`movies_arr_${userId}`));
+    return saveSearchResults(userId, title, short, searchResultsArr);
   }
 
   function searchMovies(data) {
-    const searchResultsArr = setSearchResults(data, cards, currentUserId);
-    setMoviesResults(searchResultsArr);
-    Boolean(searchResultsArr.length) ? setNoResults(false) : setNoResults(true);
+    console.log(setSearchResults(data, cards, currentUserId));
+    const { title, short, movies } = setSearchResults(data, cards, currentUserId);
+    setCurrentUserSearchResults({ title, short, movies });
+    Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
   }
 
   React.useEffect(() => {
     setPreloaderInvisible(false);
-  }, [MoviesResults]);
+  }, [CurrentUserSearchResults.movies]);
 
   React.useEffect(() => {
     handleResize();
   }, [DocumentWidth]);
 
+  React.useEffect(() => {
+    checkLocalParams(currentUserId);
+  }, [currentUserId]);
+  console.log(CardLoaderParams);
+
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
-        <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} userId={currentUserId} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={MoviesResults} isNoResults={IsNoResults} length={CardLoaderParams.length} increment={CardLoaderParams.increment} active={false} />}
+        <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} isNoResults={IsNoResults} loaderData={CardLoaderParams} active={false} />}
       </div>
     </Content>
   );

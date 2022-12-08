@@ -1,23 +1,32 @@
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { gridParamsData } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ cards, isNoResults, length, increment, active }) {
-  const [CardsLenght, setCardsLenght] = React.useState(length);
-  const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(cards.length < length);
+function MoviesCardList({ cards, isNoResults, loaderData, active }) {
+  const { desktopData } = gridParamsData;
+  const { increment } = loaderData;
+  const [LoaderData, setLoaderData] = React.useState({
+    length: desktopData.length,
+    increment: desktopData.increment
+  });
+  const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(false);
 
-  const filtredCards = cards.filter((item, index) => index < CardsLenght);
+  const filtredCards = cards.filter((item, index) => index < LoaderData.length);
   function addCards() {
-    setCardsLenght(CardsLenght + increment);
+    setLoaderData({
+      length: LoaderData.length + increment,
+      increment: increment
+    });
   }
 
   React.useEffect(() => {
-    setCardsLenght(length);
-  }, [length]);
+    setLoaderData(loaderData);
+  }, [loaderData]);
 
   React.useEffect(() => {
-    cards.length <= CardsLenght ? setCardLoaderInvisible(true) : setCardLoaderInvisible(false);
-  }, [CardsLenght]);
+    cards.length <= LoaderData.length ? setCardLoaderInvisible(true) : setCardLoaderInvisible(false);
+  }, [LoaderData]);
 
   return (
     <>
