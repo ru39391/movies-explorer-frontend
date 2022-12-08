@@ -71,7 +71,7 @@ class MainApi extends React.Component {
 
   addCard(data, jwt, config) {
     return fetch(`${this._baseUrl}${config.endPoint}`, {
-      method: 'GET',
+      method: 'POST',
       headers: this._setHeadersAuthorized(jwt),
       body: JSON.stringify(this._setBody(data))
     })

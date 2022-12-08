@@ -7,7 +7,7 @@ import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../uti
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
+function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
@@ -92,8 +92,12 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
     Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
   }
 
+  function handleCard(data) {
+    handleUserCard(data);
+  }
+
   React.useEffect(() => {
-    setPreloaderInvisible(false);
+    setPreloaderInvisible();
   }, [CurrentUserSearchResults.movies]);
 
   React.useEffect(() => {
@@ -108,7 +112,7 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} isNoResults={IsNoResults} loaderData={CardLoaderParams} active={false} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} isNoResults={IsNoResults} loaderData={CardLoaderParams} handleCard={handleCard} active={false} />}
       </div>
     </Content>
   );

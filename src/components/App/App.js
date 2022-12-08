@@ -54,20 +54,9 @@ function App() {
     }
   }
 
-  /* logged status params */
+  /* auth */
   const [IsLoggedIn, setLoggedIn] = React.useState(false);
 
-  function getJwt() {
-    const jwt = localStorage.getItem('token');
-    if(jwt) {
-      return {
-        isLoggedIn: true,
-        jwt: jwt
-      };
-    }
-  }
-
-  /* auth */
   function signUp(data) {
     mainApi.authUser(data, signupConfig)
       .then(res => {
@@ -116,7 +105,7 @@ function App() {
   function signOut() {
     setLoggedIn(false);
     localStorage.removeItem('token');
-    history.push('/signin');
+    history.push('/');
   }
 
   function profileEdit(data) {
@@ -128,8 +117,8 @@ function App() {
         const { succesMess } = profileEditConfig;
         setCurrentUser({
           id: _id,
-          name: name,
-          email: email
+          name,
+          email
         });
         setPopupData({
           isError: false,
@@ -158,8 +147,8 @@ function App() {
           const { _id, email, name } = res;
           setCurrentUser({
             id: _id,
-            email: email,
-            name: name
+            name,
+            email
           });
           setLoggedIn(true);
           history.push('/movies');
@@ -174,25 +163,48 @@ function App() {
   const [CardsList, setCardsList] = React.useState([]);
   const [CardsListErrorMess, setCardsListErrorMess] = React.useState('');
   function getInitialCards() {
-    const { isLoggedIn, jwt } = getJwt();
-    if(isLoggedIn) {
-      mainApi.getUserCards(jwt, moviesListConfig)
+    const jwt = localStorage.getItem('token');
+    mainApi.getUserCards(jwt, moviesListConfig)
+      .then(res => {
+        //console.log(res);
+        setCardsList(res);
+      })
+      .catch(err => {
+        console.log(err);
+        const { errorMess } = moviesListConfig;
+        setCardsListErrorMess(errorMess);
+      });
+  }
+
+  function handleUserCard(data) {
+    const jwt = localStorage.getItem('token');
+    if(CardsList.find(item => item.movieId === data.id)) {
+      mainApi.removeCard(data, jwt, moviesListConfig)
         .then(res => {
-          console.log(res);
-          setCardsList(res);
+          //console.log(res);
+          getInitialCards();
         })
         .catch(err => {
           console.log(err);
-          const { errorMess } = moviesListConfig;
-          setCardsListErrorMess(errorMess);
         });
-    }
+    } else {
+      mainApi.addCard(data, jwt, moviesListConfig)
+        .then(res => {
+          //console.log(res);
+          getInitialCards();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
   }
- //console.log(getJwt());
+
+  React.useEffect(() => {
+    getInitialCards();
+  }, []);
 
   React.useEffect(() => {
     checkToken();
-    getInitialCards();
   }, [IsLoggedIn]);
 
   return (
@@ -206,7 +218,7 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} />
+            <Movies cards={MoviesList} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} handleUserCard={handleUserCard} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>

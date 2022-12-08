@@ -3,20 +3,20 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { gridParamsData } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ cards, isNoResults, loaderData, active }) {
+function MoviesCardList({ cards, isNoResults, loaderData, handleCard, active }) {
   const { desktopData } = gridParamsData;
-  const { increment } = loaderData;
+  const increment = loaderData ? loaderData.increment : false;
   const [LoaderData, setLoaderData] = React.useState({
-    length: desktopData.length,
-    increment: desktopData.increment
+    length: Boolean(increment) ? desktopData.length : 0,
+    increment: Boolean(increment) ? desktopData.increment : 0
   });
   const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);
 
-  const filtredCards = cards.filter((item, index) => index < LoaderData.length);
+  const filtredCards = Boolean(loaderData) ? cards.filter((item, index) => index < LoaderData.length) : cards;
   function addCards() {
     setLoaderData({
       length: LoaderData.length + increment,
-      increment: increment
+      increment
     });
   }
 
@@ -27,6 +27,7 @@ function MoviesCardList({ cards, isNoResults, loaderData, active }) {
   React.useEffect(() => {
     cards.length <= LoaderData.length ? setCardLoaderInvisible(true) : setCardLoaderInvisible(false);
   }, [LoaderData]);
+  console.log(cards);
 
   return (
     <>
@@ -39,8 +40,9 @@ function MoviesCardList({ cards, isNoResults, loaderData, active }) {
             key={cardsItem.id}
             nameRU={cardsItem.nameRU}
             duration={cardsItem.duration}
-            image={cardsItem.image.url}
+            image={cardsItem.image}
             trailerLink={cardsItem.trailerLink}
+            handleCard={handleCard}
             active={active}
           />
         ))}
