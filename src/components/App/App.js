@@ -186,6 +186,12 @@ function App() {
         })
         .catch(err => {
           console.log(err);
+          const { errorMess } = moviesListConfig;
+          setPopupData({
+            isError: true,
+            title: errorMess,
+          });
+          togglePopupVisibility();
         });
     } else {
       mainApi.addCard(data, jwt, moviesListConfig)
@@ -195,6 +201,12 @@ function App() {
         })
         .catch(err => {
           console.log(err);
+          const { errorMess } = moviesListConfig;
+          setPopupData({
+            isError: true,
+            title: errorMess,
+          });
+          togglePopupVisibility();
         });
     };
   }
@@ -218,13 +230,15 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} handleUserCard={handleUserCard} />
+            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} handleUserCard={handleUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/saved-movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
-          <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} />
+          <PreloaderContext.Provider value={IsPreloaderVisible}>
+            <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+          </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>

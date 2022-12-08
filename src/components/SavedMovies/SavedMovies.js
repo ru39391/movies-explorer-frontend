@@ -5,7 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import PreloaderContext from '../../contexts/PreloaderContext';
 
-function SavedMovies({ cards, handlePreloaderVisibility }) {
+function SavedMovies({ cards, handlePreloaderVisibility, popupData, isPopupOpen, togglePopupVisibility }) {
   const IsPreloaderVisible = React.useContext(PreloaderContext);
   const [searchResults, setSearchResults] = React.useState({
     cards: [],
@@ -20,6 +20,10 @@ function SavedMovies({ cards, handlePreloaderVisibility }) {
     console.log(data);
   }
 
+  function handleCard(data) {
+    //handleUserCard(data);
+  }
+
   React.useEffect(() => {
     setSearchResults({
       cards,
@@ -31,7 +35,7 @@ function SavedMovies({ cards, handlePreloaderVisibility }) {
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchCards} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle="" movieShort={false} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={searchResults.cards} isNoResults={searchResults.isNoResults} loaderData="" active={false} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={searchResults.cards} userCards={cards} isNoResults={searchResults.isNoResults} loaderData="" handleCard={handleCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
       </div>
     </Content>
   );

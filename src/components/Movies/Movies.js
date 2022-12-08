@@ -7,7 +7,7 @@ import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../uti
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
+function Movies({ cards, userCards, handlePreloaderVisibility, handleUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
@@ -124,7 +124,7 @@ function Movies({ cards, handlePreloaderVisibility, handleUserCard }) {
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} isNoResults={IsNoResults} loaderData={CardLoaderParams} handleCard={handleCard} active={false} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} handleCard={handleCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
         <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
           <button className="show-more__btn" type="button" onClick={addCards}>Ещё</button>
         </div>
