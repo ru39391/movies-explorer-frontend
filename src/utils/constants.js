@@ -4,7 +4,7 @@ const SHORT_MOVIE_DURATION = 40;
 
 export const access = {
   authUrl: 'https://api.ru39391-d.students.nomoredomains.icu/',
-  cardsUrl: 'https://api.nomoreparties.co',
+  moviesUrl: 'https://api.nomoreparties.co',
 }
 
 export const signupConfig = {
@@ -26,6 +26,11 @@ export const profileEditConfig = {
   validationErrorMess: 'При обновлении профиля произошла ошибка'
 }
 
+export const moviesListConfig = {
+  endPoint: 'movies',
+  errorMess: 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+}
+
 export const breakPointsData = {
   desktopPoint: 1024,
   tabletPoint: 768,
@@ -43,7 +48,7 @@ export const gridParamsData = {
   },
   mobileData: {
     length: 5,
-    increment: 1
+    increment: 2
   }
 }
 

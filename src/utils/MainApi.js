@@ -60,6 +60,32 @@ class MainApi extends React.Component {
     })
       .then(res => this._checkResponse(res));
   }
+
+  getUserCards(jwt, config) {
+    return fetch(`${this._baseUrl}${config.endPoint}`, {
+      method: 'GET',
+      headers: this._setHeadersAuthorized(jwt)
+    })
+      .then(res => this._checkResponse(res));
+  }
+
+  addCard(data, jwt, config) {
+    return fetch(`${this._baseUrl}${config.endPoint}`, {
+      method: 'GET',
+      headers: this._setHeadersAuthorized(jwt),
+      body: JSON.stringify(this._setBody(data))
+    })
+      .then(res => this._checkResponse(res));
+  }
+
+  removeCard(data, jwt, config) {
+    return fetch(`${this._baseUrl}${config.endPoint}/${data.movieId}`, {
+      method: 'DELETE',
+      headers: this._setHeadersAuthorized(jwt),
+      body: JSON.stringify(this._setBody(data))
+    })
+      .then(res => this._checkResponse(res));
+  }
 }
 
 const mainApi = new MainApi(access.authUrl);

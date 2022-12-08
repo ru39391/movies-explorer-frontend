@@ -4,15 +4,17 @@ import iconChecked from '../../images/icon-checked.svg';
 import iconRemove from '../../images/icon-remove.svg';
 import './MoviesCard.css';
 
-function MoviesCard({card, nameRU, duration, image, active, index}) {
-  const { cardsUrl } = access;
+function MoviesCard({card, nameRU, duration, image, trailerLink, active, index}) {
+  const { moviesUrl } = access;
   return (
     <article className="card">
       <header className="card__header">
         <h2 className="card__title">{index} {nameRU}</h2>
         <span className="card__duration">{duration} минут</span>
       </header>
-      <img className="card__picture" src={`${cardsUrl}${image}`} alt={nameRU} />
+      <a className="card__link" href={trailerLink} target="_blank" rel="noopener noreferrer">
+        <img className="card__picture" src={`${moviesUrl}${image}`} alt={nameRU} />
+      </a>
       <footer className="card__footer">
         <button className={`card__btn ${active && 'card__btn_active'}`} type="button">
           {active ? <img className="card__btn-checked" src={iconChecked} alt="Фильм добавлен в коллекцию" /> : 'Сохранить'}

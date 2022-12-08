@@ -14,7 +14,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
-import { CONFLICT_ERROR_CODE, signupConfig, signinConfig, profileEditConfig } from '../../utils/constants';
+import { CONFLICT_ERROR_CODE, signupConfig, signinConfig, profileEditConfig, moviesListConfig } from '../../utils/constants';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -22,16 +22,12 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 function App() {
   const history = useHistory();
 
+  const [MoviesList, setMoviesList] = React.useState([]);
   const [CurrentUser, setCurrentUser] = React.useState({});
-  function handleCurrentUser(data) {
-    setCurrentUser(data);
-  };
-
-  const [Cards, setCardsList] = React.useState([]);
   React.useEffect(() => {
-    moviesApi.getInitialCards()
+    moviesApi.getInitialMovies()
     .then((res) => {
-      setCardsList(res);
+      setMoviesList(res);
     })
     .catch((err) => {
       console.log(err);
@@ -44,16 +40,11 @@ function App() {
   };
 
   /* popup params */
+  const [IsPopupOpen, setPopupVisibility] = React.useState(false);
   const [PopupData, setPopupData] = React.useState({
     isError: false,
     title: ''
   });
-  const [IsPopupOpen, setPopupVisibility] = React.useState(false);
-
-  /* popup handlers */
-  function setPopupParams(data) {
-    setPopupData(data);
-  }
 
   function togglePopupVisibility() {
     if(IsPopupOpen) {
@@ -65,19 +56,24 @@ function App() {
 
   /* logged status params */
   const [IsLoggedIn, setLoggedIn] = React.useState(false);
-  function handleLoggedIn() {
-    setLoggedIn(true);
-  };
-  function handleLoggedOut() {
-    setLoggedIn(false);
-  };
 
+  function getJwt() {
+    const jwt = localStorage.getItem('token');
+    if(jwt) {
+      return {
+        isLoggedIn: true,
+        jwt: jwt
+      };
+    }
+  }
+
+  /* auth */
   function signUp(data) {
     mainApi.authUser(data, signupConfig)
       .then(res => {
         //console.log(res);
         const { succesMess } = signupConfig;
-        setPopupParams({
+        setPopupData({
           isError: false,
           title: succesMess
         });
@@ -87,7 +83,7 @@ function App() {
         console.log(err);
         const { status } = err;
         const { conflictErrorMess, validationErrorMess } = signupConfig;
-        setPopupParams({
+        setPopupData({
           isError: true,
           title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
         });
@@ -102,14 +98,14 @@ function App() {
         if(res.token) {
           const { token } = res;
           localStorage.setItem('token', token);
-          handleLoggedIn();
+          setLoggedIn(true);
           history.push('/movies');
         }
       })
       .catch(err => {
         console.log(err);
         const { errorMess } = signinConfig;
-        setPopupParams({
+        setPopupData({
           isError: true,
           title: errorMess
         });
@@ -117,18 +113,25 @@ function App() {
       });
   }
 
+  function signOut() {
+    setLoggedIn(false);
+    localStorage.removeItem('token');
+    history.push('/signin');
+  }
+
   function profileEdit(data) {
     const jwt = localStorage.getItem('token');
     mainApi.setUserData(data, jwt, profileEditConfig)
       .then(res => {
         //console.log(res);
-        const { name, email } = res;
+        const { _id, email, name } = res;
         const { succesMess } = profileEditConfig;
-        handleCurrentUser({
+        setCurrentUser({
+          id: _id,
           name: name,
           email: email
         });
-        setPopupParams({
+        setPopupData({
           isError: false,
           title: succesMess
         });
@@ -138,18 +141,12 @@ function App() {
         console.log(err);
         const { status } = err;
         const { conflictErrorMess, validationErrorMess } = profileEditConfig;
-        setPopupParams({
+        setPopupData({
           isError: true,
           title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
         });
         togglePopupVisibility();
       });
-  }
-
-  function signOut() {
-    handleLoggedOut();
-    localStorage.removeItem('token');
-    history.push('/signin');
   }
 
   function checkToken() {
@@ -159,12 +156,12 @@ function App() {
         .then(res => {
           //console.log(res);
           const { _id, email, name } = res;
-          handleCurrentUser({
+          setCurrentUser({
             id: _id,
             email: email,
             name: name
           });
-          handleLoggedIn();
+          setLoggedIn(true);
           history.push('/movies');
         })
         .catch(err => {
@@ -173,8 +170,29 @@ function App() {
     }
   }
 
+  /* user cards params */
+  const [CardsList, setCardsList] = React.useState([]);
+  const [CardsListErrorMess, setCardsListErrorMess] = React.useState('');
+  function getInitialCards() {
+    const { isLoggedIn, jwt } = getJwt();
+    if(isLoggedIn) {
+      mainApi.getUserCards(jwt, moviesListConfig)
+        .then(res => {
+          console.log(res);
+          setCardsList(res);
+        })
+        .catch(err => {
+          console.log(err);
+          const { errorMess } = moviesListConfig;
+          setCardsListErrorMess(errorMess);
+        });
+    }
+  }
+ //console.log(getJwt());
+
   React.useEffect(() => {
     checkToken();
+    getInitialCards();
   }, [IsLoggedIn]);
 
   return (
@@ -188,13 +206,13 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={Cards} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} />
+            <Movies cards={MoviesList} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/saved-movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
-          <SavedMovies cards={Cards} />
+          <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} />
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/profile" isLoggedIn={IsLoggedIn}>

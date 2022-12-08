@@ -8,17 +8,16 @@ import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
-  const { id } = React.useContext(CurrentUserContext);
+  const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
   const { desktopPoint, tabletPoint, mobilePoint } = breakPointsData;
   const { desktopData, tabletData, mobileData } = gridParamsData;
-  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${id}`));
-  //console.log(`movies_arr_${id}`);
+  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${currentUserId}`));
 
   const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
   const [DocumentWidth, setDocumentWidth] = React.useState(document.body.scrollWidth);
-  const [CardResults, setCardResults] = React.useState(Boolean(savedMoviesArr) ? savedMoviesArr : []);
+  const [MoviesResults, setMoviesResults] = React.useState(Boolean(savedMoviesArr) ? savedMoviesArr : []);
   const [IsNoResults, setNoResults] = React.useState(Array.isArray(savedMoviesArr) && !savedMoviesArr.length);
 
   function handleResize() {
@@ -64,14 +63,14 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   }
 
   function searchMovies(data) {
-    const searchResultsArr = setSearchResults(data, cards, id);
-    setCardResults(searchResultsArr);
+    const searchResultsArr = setSearchResults(data, cards, currentUserId);
+    setMoviesResults(searchResultsArr);
     Boolean(searchResultsArr.length) ? setNoResults(false) : setNoResults(true);
   }
 
   React.useEffect(() => {
     setPreloaderInvisible(false);
-  }, [CardResults]);
+  }, [MoviesResults]);
 
   React.useEffect(() => {
     handleResize();
@@ -80,8 +79,8 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
-        <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} userId={id} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CardResults} isNoResults={IsNoResults} length={CardLoaderParams.length} increment={CardLoaderParams.increment} active={false} />}
+        <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} userId={currentUserId} />
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={MoviesResults} isNoResults={IsNoResults} length={CardLoaderParams.length} increment={CardLoaderParams.increment} active={false} />}
       </div>
     </Content>
   );

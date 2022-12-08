@@ -15,7 +15,7 @@ class MoviesApi extends React.Component {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  getInitialCards() {
+  getInitialMovies() {
     return fetch(`${this._baseUrl}/beatfilm-movies`, {
       method: 'GET',
       headers: {
@@ -26,6 +26,6 @@ class MoviesApi extends React.Component {
   }
 }
 
-const moviesApi = new MoviesApi(access.cardsUrl);
+const moviesApi = new MoviesApi(access.moviesUrl);
 
 export default moviesApi;

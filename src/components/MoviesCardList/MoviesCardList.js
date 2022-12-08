@@ -31,6 +31,7 @@ function MoviesCardList({ cards, isNoResults, length, increment, active }) {
             nameRU={cardsItem.nameRU}
             duration={cardsItem.duration}
             image={cardsItem.image.url}
+            trailerLink={cardsItem.trailerLink}
             active={active}
           />
         ))}
