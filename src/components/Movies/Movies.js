@@ -24,6 +24,18 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   function handleResize() {
     setTimeout(() => {
         setDocumentWidth(document.body.scrollWidth);
+
+        if(DocumentWidth > desktopPoint) {
+          setCardLoaderParams(desktopData);
+        }
+    
+        if(DocumentWidth > mobilePoint && DocumentWidth <= tabletPoint) {
+          setCardLoaderParams(tabletData);
+        }
+    
+        if(DocumentWidth <= mobilePoint) {
+          setCardLoaderParams(mobileData);
+        }
     }, 250);
   }
   window.addEventListener('resize', handleResize);
@@ -64,8 +76,6 @@ function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   React.useEffect(() => {
     handleResize();
   }, [DocumentWidth]);
-
-  //console.log(CardResults);
 
   return (
     <Content contentClassMod="content_padding_none">

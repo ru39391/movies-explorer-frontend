@@ -12,9 +12,11 @@ function MoviesCardList({ cards, isNoResults, length, increment, active }) {
   }
 
   React.useEffect(() => {
-    if(cards.length <= CardsLenght) {
-      setCardLoaderInvisible(true);
-    }
+    setCardsLenght(length);
+  }, [length]);
+
+  React.useEffect(() => {
+    cards.length <= CardsLenght ? setCardLoaderInvisible(true) : setCardLoaderInvisible(false);
   }, [CardsLenght]);
 
   return (
