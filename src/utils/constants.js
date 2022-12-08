@@ -1,3 +1,5 @@
+const CONFLICT_ERROR_CODE = 409;
+
 const SHORT_MOVIE_DURATION = 40;
 
 export const access = {
@@ -24,6 +26,28 @@ export const profileEditConfig = {
   validationErrorMess: 'При обновлении профиля произошла ошибка'
 }
 
+export const breakPointsData = {
+  desktopPoint: 1024,
+  tabletPoint: 768,
+  mobilePoint: 480
+}
+
+export const gridParamsData = {
+  desktopData: {
+    length: 12,
+    increment: 3
+  },
+  tabletData: {
+    length: 8,
+    increment: 2
+  },
+  mobileData: {
+    length: 5,
+    increment: 1
+  }
+}
+
 export {
+  CONFLICT_ERROR_CODE,
   SHORT_MOVIE_DURATION
 };

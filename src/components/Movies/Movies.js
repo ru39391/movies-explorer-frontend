@@ -3,17 +3,30 @@ import Content from '../Content/Content';
 import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { SHORT_MOVIE_DURATION } from '../../utils/constants';
+import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../utils/constants';
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, handlePreloaderVisibility }) {
+function Movies({ cards, IsLoggedIn, handlePreloaderVisibility }) {
   const { id } = React.useContext(CurrentUserContext);
   const IsPreloaderVisible = React.useContext(PreloaderContext);
-  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${id}`));
 
-  const [CardResults, setCardResults] = React.useState(Boolean(savedMoviesArr.length) ? savedMoviesArr : []);
+  const { desktopPoint, tabletPoint, mobilePoint } = breakPointsData;
+  const { desktopData, tabletData, mobileData } = gridParamsData;
+  const savedMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${id}`));
+  //console.log(`movies_arr_${id}`);
+
+  const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
+  const [DocumentWidth, setDocumentWidth] = React.useState(document.body.scrollWidth);
+  const [CardResults, setCardResults] = React.useState(Boolean(savedMoviesArr) ? savedMoviesArr : []);
   const [IsNoResults, setNoResults] = React.useState(Array.isArray(savedMoviesArr) && !savedMoviesArr.length);
+
+  function handleResize() {
+    setTimeout(() => {
+        setDocumentWidth(document.body.scrollWidth);
+    }, 250);
+  }
+  window.addEventListener('resize', handleResize);
 
   function setPreloaderInvisible() {
     handlePreloaderVisibility(false);
@@ -48,14 +61,17 @@ function Movies({ cards, handlePreloaderVisibility }) {
     setPreloaderInvisible(false);
   }, [CardResults]);
 
+  React.useEffect(() => {
+    handleResize();
+  }, [DocumentWidth]);
+
+  //console.log(CardResults);
+
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} userId={id} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CardResults} isNoResults={IsNoResults} active={false} />}
-        <div className="show-more">
-          <button className="show-more__btn" type="button">Ещё</button>
-        </div>
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CardResults} isNoResults={IsNoResults} length={CardLoaderParams.length} increment={CardLoaderParams.increment} active={false} />}
       </div>
     </Content>
   );

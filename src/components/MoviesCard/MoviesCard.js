@@ -4,12 +4,12 @@ import iconChecked from '../../images/icon-checked.svg';
 import iconRemove from '../../images/icon-remove.svg';
 import './MoviesCard.css';
 
-function MoviesCard({card, nameRU, duration, image, active}) {
+function MoviesCard({card, nameRU, duration, image, active, index}) {
   const { cardsUrl } = access;
   return (
     <article className="card">
       <header className="card__header">
-        <h2 className="card__title">{nameRU}</h2>
+        <h2 className="card__title">{index} {nameRU}</h2>
         <span className="card__duration">{duration} минут</span>
       </header>
       <img className="card__picture" src={`${cardsUrl}${image}`} alt={nameRU} />

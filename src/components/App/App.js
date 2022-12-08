@@ -14,7 +14,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
-import { signupConfig, signinConfig, profileEditConfig } from '../../utils/constants';
+import { CONFLICT_ERROR_CODE, signupConfig, signinConfig, profileEditConfig } from '../../utils/constants';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -28,6 +28,15 @@ function App() {
   };
 
   const [Cards, setCardsList] = React.useState([]);
+  React.useEffect(() => {
+    moviesApi.getInitialCards()
+    .then((res) => {
+      setCardsList(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
 
   const [IsPreloaderVisible, setPreloaderVisibility] = React.useState(false);
   function handlePreloaderVisibility(value) {
@@ -80,7 +89,7 @@ function App() {
         const { conflictErrorMess, validationErrorMess } = signupConfig;
         setPopupParams({
           isError: true,
-          title: status === 409 ? conflictErrorMess : validationErrorMess,
+          title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
         });
         togglePopupVisibility();
       });
@@ -131,7 +140,7 @@ function App() {
         const { conflictErrorMess, validationErrorMess } = profileEditConfig;
         setPopupParams({
           isError: true,
-          title: status === 409 ? conflictErrorMess : validationErrorMess,
+          title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
         });
         togglePopupVisibility();
       });
@@ -166,13 +175,6 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
-    moviesApi.getInitialCards()
-    .then((res) => {
-      setCardsList(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
   }, [IsLoggedIn]);
 
   return (
@@ -186,7 +188,7 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={Cards} handlePreloaderVisibility={handlePreloaderVisibility} />
+            <Movies cards={Cards} isLoggedIn={IsLoggedIn} handlePreloaderVisibility={handlePreloaderVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
