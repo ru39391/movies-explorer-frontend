@@ -85,6 +85,11 @@
   background-color: rgba(52, 86, 243, .8);
 }
 
+.search-form__btn:disabled {
+  cursor: default;
+  background-color: rgba(52, 86, 243, .5);
+}
+
 .search-form__toggler {
   display: none;
 }

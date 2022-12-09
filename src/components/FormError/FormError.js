@@ -1,8 +1,8 @@
 import React from 'react';
 
-function FormError({ errorText }) {
+function FormError({ errorText, classMod }) {
   return (
-    <div className='form__error'>{errorText}</div>
+    <div className={`form__error ${classMod}`}>{errorText}</div>
   );
 }
 FormError.defaultProps = {

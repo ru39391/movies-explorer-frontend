@@ -1,8 +1,9 @@
 import React from 'react';
+import FormError from '../FormError/FormError';
 import iconSearch from '../../images/icon-search.svg';
 import './SearchForm.css';
 
-function SearchForm({ handleForm, handlePreloaderVisibility, movieTitle, movieShort }) {
+function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieTitle, movieShort }) {
   const [SearchFormTitle, setSearchFormTitle] = React.useState('');
   const [SearchFormShortMovie, setSearchFormShortMovie] = React.useState(false);
 
@@ -34,7 +35,7 @@ function SearchForm({ handleForm, handlePreloaderVisibility, movieTitle, movieSh
     <form className="search-form" onSubmit={handleSubmit}>
       <div className="search-form__wrapper">
         <input className="search-form__field" name="title" type="text" value={SearchFormTitle || ''} onChange={handleChangeTitle} placeholder="Фильм" required />
-        <button className="search-form__btn" type="submit">
+        <button className="search-form__btn" type="submit" disabled={btnDisabled}>
           <img src={iconSearch} alt="Поиск" />
         </button>
       </div>
