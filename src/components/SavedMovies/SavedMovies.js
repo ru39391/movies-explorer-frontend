@@ -48,6 +48,13 @@ function SavedMovies({ cards, handlePreloaderVisibility, addUserCard, removeUser
   }
 
   React.useEffect(() => {
+    setCurrentSearchResults({
+      cards: cards,
+      isNoResults: Boolean(cards.length) ? false : true,
+    });
+  }, [cards]);
+
+  React.useEffect(() => {
     setPreloaderInvisible();
   }, [CurrentSearchResults]);
 

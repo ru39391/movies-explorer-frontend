@@ -54,6 +54,15 @@ function App() {
     }
   }
 
+  function showErrorMess(config) {
+    const { errorMess } = config;
+    setPopupData({
+      isError: true,
+      title: errorMess,
+    });
+    togglePopupVisibility();
+  }
+
   /* auth */
   const [IsLoggedIn, setLoggedIn] = React.useState(false);
 
@@ -93,68 +102,44 @@ function App() {
       })
       .catch(err => {
         console.log(err);
-        const { errorMess } = signinConfig;
-        setPopupData({
-          isError: true,
-          title: errorMess
-        });
-        togglePopupVisibility();
+        showErrorMess(signinConfig);
       });
   }
 
   function signOut() {
-    setLoggedIn(false);
     localStorage.removeItem('token');
+    setLoggedIn(false);
     history.push('/');
   }
 
   function profileEdit(data) {
     const jwt = localStorage.getItem('token');
-    mainApi.setUserData(data, jwt, profileEditConfig)
-      .then(res => {
-        //console.log(res);
-        const { _id, email, name } = res;
-        const { succesMess } = profileEditConfig;
-        setCurrentUser({
-          id: _id,
-          name,
-          email
-        });
-        setPopupData({
-          isError: false,
-          title: succesMess
-        });
-        togglePopupVisibility();
-      })
-      .catch(err => {
-        console.log(err);
-        const { status } = err;
-        const { conflictErrorMess, validationErrorMess } = profileEditConfig;
-        setPopupData({
-          isError: true,
-          title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
-        });
-        togglePopupVisibility();
-      });
-  }
-
-  function checkToken() {
-    const jwt = localStorage.getItem('token');
     if(jwt) {
-      mainApi.getUserToken(jwt, profileEditConfig)
+      mainApi.setUserData(data, jwt, profileEditConfig)
         .then(res => {
           //console.log(res);
           const { _id, email, name } = res;
+          const { succesMess } = profileEditConfig;
           setCurrentUser({
             id: _id,
             name,
             email
           });
-          setLoggedIn(true);
-          history.push('/movies');
+          setPopupData({
+            isError: false,
+            title: succesMess
+          });
+          togglePopupVisibility();
         })
         .catch(err => {
           console.log(err);
+          const { status } = err;
+          const { conflictErrorMess, validationErrorMess } = profileEditConfig;
+          setPopupData({
+            isError: true,
+            title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
+          });
+          togglePopupVisibility();
         });
     }
   }
@@ -162,8 +147,7 @@ function App() {
   /* user cards params */
   const [CardsList, setCardsList] = React.useState([]);
   const [CardsListErrorMess, setCardsListErrorMess] = React.useState('');
-  function getInitialCards() {
-    const jwt = localStorage.getItem('token');
+  function getInitialCards(jwt) {
     mainApi.getUserCards(jwt, moviesListConfig)
       .then(res => {
         //console.log(res);
@@ -178,46 +162,54 @@ function App() {
 
   function addUserCard(data) {
     const jwt = localStorage.getItem('token');
-    mainApi.addCard(data, jwt, moviesListConfig)
-      .then(res => {
-        //console.log(res);
-        getInitialCards();
-      })
-      .catch(err => {
-        console.log(err);
-        const { errorMess } = moviesListConfig;
-        setPopupData({
-          isError: true,
-          title: errorMess,
+    if(jwt) {
+      mainApi.addCard(data, jwt, moviesListConfig)
+        .then(res => {
+          //console.log(res);
+          getInitialCards(jwt);
+        })
+        .catch(err => {
+          console.log(err);
+          showErrorMess(moviesListConfig);
         });
-        togglePopupVisibility();
-      });
+    }
   }
 
   function removeUserCard(data) {
     const jwt = localStorage.getItem('token');
-    mainApi.removeCard(data, jwt, moviesListConfig)
-      .then(res => {
-        //console.log(res);
-        getInitialCards();
-      })
-      .catch(err => {
-        console.log(err);
-        const { errorMess } = moviesListConfig;
-        setPopupData({
-          isError: true,
-          title: errorMess,
+    if(jwt) {
+      mainApi.removeCard(data, jwt, moviesListConfig)
+        .then(res => {
+          //console.log(res);
+          getInitialCards(jwt);
+        })
+        .catch(err => {
+          console.log(err);
+          showErrorMess(moviesListConfig);
         });
-        togglePopupVisibility();
-      });
+    }
   }
 
   React.useEffect(() => {
-    getInitialCards();
-  }, []);
-
-  React.useEffect(() => {
-    checkToken();
+    const jwt = localStorage.getItem('token');
+    if(jwt) {
+      Promise.all([mainApi.getUserToken(jwt, profileEditConfig), mainApi.getUserCards(jwt, moviesListConfig)])
+        .then(([userData, userCards]) => {
+          const { _id, email, name } = userData;
+          setCurrentUser({
+            id: _id,
+            name,
+            email
+          });
+          setLoggedIn(true);
+          setCardsList(userCards);
+          history.push('/movies');
+        })
+        .catch((err) => {
+          console.log(err);
+          showErrorMess(moviesListConfig);
+        });
+    }
   }, [IsLoggedIn]);
 
   return (
@@ -231,7 +223,7 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} isLoggedIn={IsLoggedIn} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>

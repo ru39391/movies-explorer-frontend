@@ -1,10 +1,11 @@
 import React from 'react';
 import Popup from '../Popup/Popup';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { gridParamsData } from '../../utils/constants';
+import { moviesListConfig, gridParamsData } from '../../utils/constants';
 import './MoviesCardList.css';
 
 function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, removeCard, popupData, isPopupOpen, togglePopupVisibility }) {
+  const { warningMess } = moviesListConfig;
   const { title, isError } = popupData;
   const { desktopData } = gridParamsData;
   const [LoaderData, setLoaderData] = React.useState({
@@ -21,7 +22,7 @@ function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, re
   return (
     <>
       <div className={`card-list ${isNoResults && 'card-list_noresults'}`}>
-        {isNoResults && 'Ничего не найдено'}
+        {isNoResults && warningMess}
         {filtredCards.map((cardsItem, index) => (
           <MoviesCard
             key={Boolean(cardsItem.movieId) ? cardsItem.movieId : cardsItem.id}
