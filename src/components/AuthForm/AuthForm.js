@@ -4,7 +4,7 @@ import Popup from '../Popup/Popup';
 import AuthFormFooter from '../AuthFormFooter/AuthFormFooter';
 import './AuthForm.css';
 
-function AuthForm({ children, formTitle, btnCaption, footerText, footerTitle, footerUrl, onSubmit, popupData, isPopupOpen, togglePopupVisibility }) {
+function AuthForm({ children, formTitle, btnCaption, btnDisabled, footerText, footerTitle, footerUrl, onSubmit, popupData, isPopupOpen, togglePopupVisibility }) {
   const { title, isError } = popupData;
   return (
     <>
@@ -16,7 +16,7 @@ function AuthForm({ children, formTitle, btnCaption, footerText, footerTitle, fo
         <form className="form__body" onSubmit={onSubmit}>
           <fieldset className="form__wrapper">{children}</fieldset>
           <div className="form__footer">
-            <button className="form__button" type="submit">{btnCaption}</button>
+            <button className="form__button" type="submit" disabled={btnDisabled}>{btnCaption}</button>
             <AuthFormFooter footerText={footerText} footerTitle={footerTitle} footerUrl={footerUrl} />
           </div>
         </form>

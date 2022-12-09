@@ -176,7 +176,7 @@
 .form__button:disabled {
   cursor: default;
   color: #C2C2C2;
-  background-color: #F8F8F8;
+  background-color: rgba(0,0,0,.04);
 }
 
 .form__button_type_plain {

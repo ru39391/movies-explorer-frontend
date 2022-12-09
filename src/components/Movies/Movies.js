@@ -3,7 +3,7 @@ import Content from '../Content/Content';
 import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../utils/constants';
+import { SHORT_MOVIE_DURATION, breakPointsData, gridParams } from '../../utils/constants';
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -12,7 +12,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
   const { desktopPoint, mobilePoint } = breakPointsData;
-  const { desktopData, tabletData, mobileData } = gridParamsData;  
+  const { desktopData, tabletData, mobileData } = gridParams;  
 
   const [IsNoResults, setNoResults] = React.useState(false);
   const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);

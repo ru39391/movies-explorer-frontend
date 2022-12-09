@@ -38,7 +38,7 @@ export const breakPointsData = {
   mobilePoint: 480
 }
 
-export const gridParamsData = {
+export const gridParams = {
   desktopData: {
     length: 12,
     increment: 3
@@ -51,6 +51,18 @@ export const gridParamsData = {
     length: 5,
     increment: 2
   }
+}
+
+export const validationParams = {
+  name: /^[A-Za-zА-Яа-яЁё\s-]{2,30}$/,
+  email: /^([A-Za-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/,
+  password: /^[A-Za-z0-9_-]{8,30}$/,
+}
+
+export const validationMessData = {
+  name: 'Имя должно состоять из букв и быть не короче 2 символов',
+  email: 'Введите e-mail',
+  password: 'Пароль может включать цифры и латиницу, длина - не менее 8 символов',
 }
 
 export {

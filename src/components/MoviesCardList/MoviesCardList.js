@@ -1,13 +1,13 @@
 import React from 'react';
 import Popup from '../Popup/Popup';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { moviesListConfig, gridParamsData } from '../../utils/constants';
+import { moviesListConfig, gridParams } from '../../utils/constants';
 import './MoviesCardList.css';
 
 function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, removeCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const { warningMess } = moviesListConfig;
   const { title, isError } = popupData;
-  const { desktopData } = gridParamsData;
+  const { desktopData } = gridParams;
   const [LoaderData, setLoaderData] = React.useState({
     length: desktopData.length,
     increment: desktopData.increment
