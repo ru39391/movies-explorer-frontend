@@ -93,7 +93,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
     Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
   }
 
-  function addCards() {
+  function addMovies() {
     setCardLoaderParams({
       length: CardLoaderParams.length + CardLoaderParams.increment,
       increment: CardLoaderParams.increment
@@ -130,7 +130,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
         {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
         <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
-          <button className="show-more__btn" type="button" onClick={addCards}>Ещё</button>
+          <button className="show-more__btn" type="button" onClick={addMovies}>Ещё</button>
         </div>
       </div>
     </Content>
