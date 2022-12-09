@@ -6,10 +6,12 @@ import './SearchForm.css';
 function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieTitle, movieShort }) {
   const [SearchFormTitle, setSearchFormTitle] = React.useState('');
   const [SearchFormShortMovie, setSearchFormShortMovie] = React.useState(false);
+  const [BtnDisabled, setBtnDisabled] = React.useState(true);
 
   function handleChangeTitle(e) {
     const { value } = e.target;
     setSearchFormTitle(value);
+    setBtnDisabled(!Boolean(value.length));
   };
 
   function handleChangeToggler(e) {
@@ -27,6 +29,10 @@ function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieT
   }
 
   React.useEffect(() => {
+    setBtnDisabled(btnDisabled);
+  }, [btnDisabled]);
+
+  React.useEffect(() => {
     setSearchFormTitle(movieTitle);
     setSearchFormShortMovie(movieShort);
   }, [movieTitle, movieShort]);
@@ -35,7 +41,7 @@ function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieT
     <form className="search-form" onSubmit={handleSubmit}>
       <div className="search-form__wrapper">
         <input className="search-form__field" name="title" type="text" value={SearchFormTitle || ''} onChange={handleChangeTitle} placeholder="Фильм" required />
-        <button className="search-form__btn" type="submit" disabled={btnDisabled}>
+        <button className="search-form__btn" type="submit" disabled={BtnDisabled}>
           <img src={iconSearch} alt="Поиск" />
         </button>
       </div>

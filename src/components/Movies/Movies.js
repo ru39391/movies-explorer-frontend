@@ -14,6 +14,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   const { desktopPoint, mobilePoint } = breakPointsData;
   const { desktopData, tabletData, mobileData } = gridParams;  
 
+  const [BtnDisabled, setBtnDisabled] = React.useState(true);
   const [IsNoResults, setNoResults] = React.useState(false);
   const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);
   const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
@@ -109,6 +110,12 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   }
 
   React.useEffect(() => {
+    if(CurrentUserSearchResults.title) {
+      setBtnDisabled(false);
+    }
+  }, [CurrentUserSearchResults.title]);
+
+  React.useEffect(() => {
     setPreloaderInvisible();
   }, [CurrentUserSearchResults.movies]);
 
@@ -127,7 +134,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
-        <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
+        <SearchForm btnDisabled={BtnDisabled} handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
         {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
         <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
           <button className="show-more__btn" type="button" onClick={addMovies}>Ещё</button>

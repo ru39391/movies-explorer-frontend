@@ -61,7 +61,7 @@ function SavedMovies({ cards, handlePreloaderVisibility, addUserCard, removeUser
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
-        <SearchForm handleForm={searchCards} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle="" movieShort={false} />
+        <SearchForm btnDisabled={true} handleForm={searchCards} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle="" movieShort={false} />
         {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentSearchResults.cards} userCards={cards} isNoResults={CurrentSearchResults.isNoResults} loaderData="" addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
       </div>
     </Content>
