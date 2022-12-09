@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './PageNotFound.css';
 
 function PageNotFound() {
+  const history = useHistory();
+
   return (
     <section className="not-found">
         <div className="not-found__content">
@@ -10,7 +12,7 @@ function PageNotFound() {
           <p className="not-found__text">Страница не найдена</p>
         </div>
         <footer className="not-found__footer">
-          <NavLink to="/" className="not-found__link">Назад</NavLink>
+          <button className="not-found__link" onClick={history.goBack}>Назад</button>
         </footer>
     </section>
   );

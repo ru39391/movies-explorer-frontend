@@ -31,6 +31,7 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
+      showErrorMess(moviesListConfig);
     });
   }, []);
 
@@ -146,7 +147,6 @@ function App() {
 
   /* user cards params */
   const [CardsList, setCardsList] = React.useState([]);
-  const [CardsListErrorMess, setCardsListErrorMess] = React.useState('');
   function getInitialCards(jwt) {
     mainApi.getUserCards(jwt, moviesListConfig)
       .then(res => {
@@ -155,8 +155,6 @@ function App() {
       })
       .catch(err => {
         console.log(err);
-        const { errorMess } = moviesListConfig;
-        setCardsListErrorMess(errorMess);
       });
   }
 
@@ -230,7 +228,7 @@ function App() {
         <ProtectedRoute exact path="/saved-movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+            <SavedMovies cards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>

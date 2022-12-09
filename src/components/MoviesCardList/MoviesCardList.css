@@ -22,6 +22,7 @@
 
 .card-list_noresults {
   font-size: 18px;
+  line-height: 1.4;
   text-align: center;
   display: inherit;
 }
