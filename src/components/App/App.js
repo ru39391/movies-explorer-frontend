@@ -68,15 +68,11 @@ function App() {
   const [IsLoggedIn, setLoggedIn] = React.useState(false);
 
   function signUp(data) {
+    const { email, password } = data;
     mainApi.authUser(data, signupConfig)
       .then(res => {
         //console.log(res);
-        const { succesMess } = signupConfig;
-        setPopupData({
-          isError: false,
-          title: succesMess
-        });
-        togglePopupVisibility();
+        signIn({ email, password });
       })
       .catch(err => {
         console.log(err);
