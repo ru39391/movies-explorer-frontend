@@ -4,7 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { gridParamsData } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ cards, userCards, isNoResults, loaderData, handleCard, popupData, isPopupOpen, togglePopupVisibility }) {
+function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, removeCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const { title, isError } = popupData;
   const { desktopData } = gridParamsData;
   const [LoaderData, setLoaderData] = React.useState({
@@ -24,13 +24,16 @@ function MoviesCardList({ cards, userCards, isNoResults, loaderData, handleCard,
         {isNoResults && 'Ничего не найдено'}
         {filtredCards.map((cardsItem, index) => (
           <MoviesCard
+            key={Boolean(cardsItem.movieId) ? cardsItem.movieId : cardsItem.id}
             card={cardsItem}
             nameRU={cardsItem.nameRU}
             duration={cardsItem.duration}
             image={cardsItem.image}
             trailerLink={cardsItem.trailerLink}
-            userCards={userCards.map(item => item.movieId)}
-            handleCard={handleCard}
+            userCards={userCards}
+            userCardIds={userCards.map(item => item.movieId)}
+            addCard={addCard}
+            removeCard={removeCard}
           />
         ))}
       </div>

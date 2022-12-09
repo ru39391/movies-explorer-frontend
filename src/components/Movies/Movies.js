@@ -7,7 +7,7 @@ import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../uti
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, userCards, handlePreloaderVisibility, handleUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
+function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, removeUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
@@ -100,8 +100,12 @@ function Movies({ cards, userCards, handlePreloaderVisibility, handleUserCard, p
     });
   }
 
-  function handleCard(data) {
-    handleUserCard(data);
+  function addCard(data) {
+    addUserCard(data);
+  }
+
+  function removeCard(data) {
+    removeUserCard(data);
   }
 
   React.useEffect(() => {
@@ -124,7 +128,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, handleUserCard, p
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} handleCard={handleCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
         <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
           <button className="show-more__btn" type="button" onClick={addCards}>Ещё</button>
         </div>

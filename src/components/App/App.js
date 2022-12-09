@@ -176,39 +176,40 @@ function App() {
       });
   }
 
-  function handleUserCard(data) {
+  function addUserCard(data) {
     const jwt = localStorage.getItem('token');
-    if(CardsList.find(item => item.movieId === data.id)) {
-      mainApi.removeCard(data, jwt, moviesListConfig)
-        .then(res => {
-          //console.log(res);
-          getInitialCards();
-        })
-        .catch(err => {
-          console.log(err);
-          const { errorMess } = moviesListConfig;
-          setPopupData({
-            isError: true,
-            title: errorMess,
-          });
-          togglePopupVisibility();
+    mainApi.addCard(data, jwt, moviesListConfig)
+      .then(res => {
+        //console.log(res);
+        getInitialCards();
+      })
+      .catch(err => {
+        console.log(err);
+        const { errorMess } = moviesListConfig;
+        setPopupData({
+          isError: true,
+          title: errorMess,
         });
-    } else {
-      mainApi.addCard(data, jwt, moviesListConfig)
-        .then(res => {
-          //console.log(res);
-          getInitialCards();
-        })
-        .catch(err => {
-          console.log(err);
-          const { errorMess } = moviesListConfig;
-          setPopupData({
-            isError: true,
-            title: errorMess,
-          });
-          togglePopupVisibility();
+        togglePopupVisibility();
+      });
+  }
+
+  function removeUserCard(data) {
+    const jwt = localStorage.getItem('token');
+    mainApi.removeCard(data, jwt, moviesListConfig)
+      .then(res => {
+        //console.log(res);
+        getInitialCards();
+      })
+      .catch(err => {
+        console.log(err);
+        const { errorMess } = moviesListConfig;
+        setPopupData({
+          isError: true,
+          title: errorMess,
         });
-    };
+        togglePopupVisibility();
+      });
   }
 
   React.useEffect(() => {
@@ -230,14 +231,14 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} handleUserCard={handleUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute exact path="/saved-movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+            <SavedMovies cards={CardsList} errorMess={CardsListErrorMess} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>
