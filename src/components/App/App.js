@@ -223,7 +223,7 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} isLoggedIn={IsLoggedIn} />
+            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>

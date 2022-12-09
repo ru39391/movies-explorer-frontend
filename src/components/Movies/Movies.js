@@ -7,7 +7,7 @@ import { SHORT_MOVIE_DURATION, breakPointsData, gridParamsData } from '../../uti
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, removeUserCard, popupData, isPopupOpen, togglePopupVisibility, isLoggedIn }) {
+function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, removeUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
@@ -29,17 +29,14 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   }
   
   function checkLocalParams(userId) {
-    const jwt = localStorage.getItem('token');
-    if(jwt) {
-      const localMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${userId}`));
-      const localStorageData = {
-        title: checkParam(localStorage.getItem(`movies_title_${userId}`), CurrentUserSearchResults.title),
-        short: checkParam(JSON.parse(localStorage.getItem(`movies_short_${userId}`)), CurrentUserSearchResults.short),
-        movies: checkParam(localMoviesArr, CurrentUserSearchResults.movies)
-      }
-      setCurrentUserSearchResults(localStorageData);
-      setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
+    const localMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${userId}`));
+    const localStorageData = {
+      title: checkParam(localStorage.getItem(`movies_title_${userId}`), CurrentUserSearchResults.title),
+      short: JSON.parse(localStorage.getItem(`movies_short_${userId}`)),
+      movies: checkParam(localMoviesArr, CurrentUserSearchResults.movies)
     }
+    setCurrentUserSearchResults(localStorageData);
+    setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
   }
 
   function handleResize() {
@@ -125,7 +122,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
 
   React.useEffect(() => {
     checkLocalParams(currentUserId);
-  }, [isLoggedIn, currentUserId]);
+  }, [currentUserId]);
 
   return (
     <Content contentClassMod="content_padding_none">
