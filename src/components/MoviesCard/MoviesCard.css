@@ -148,3 +148,11 @@
 .card__btn_active:hover .card__btn-remove {
   display: block;
 }
+
+.card__btn-checked_display_none {
+  display: none;
+}
+
+.card__btn-remove_display_block {
+  display: block;
+}

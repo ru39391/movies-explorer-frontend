@@ -47,9 +47,9 @@ function MoviesCard({card, nameRU, duration, image, trailerLink, userCards, user
         <img className="card__picture" src={picture} alt={nameRU} />
       </a>
       <footer className="card__footer">
-        <button className={`card__btn ${isSavedCard && 'card__btn_active'}`} type="button" onClick={handleCard}>
-          {isSavedCard ? <img className="card__btn-checked" src={iconChecked} alt="Фильм добавлен в коллекцию" /> : 'Сохранить'}
-          <img className="card__btn-remove" src={iconRemove} alt="Удалить коллекции" />
+        <button className={`card__btn ${Boolean(card.id) && isSavedCard && 'card__btn_active'}`} type="button" onClick={handleCard}>
+          {isSavedCard ? <img className={`card__btn-checked ${Boolean(card.movieId) && 'card__btn-checked_display_none'}`} src={iconChecked} alt="Фильм добавлен в коллекцию" /> : 'Сохранить'}
+          <img className={`card__btn-remove ${Boolean(card.movieId) && 'card__btn-remove_display_block'}`} src={iconRemove} alt="Удалить коллекции" />
         </button>
       </footer>
     </article>

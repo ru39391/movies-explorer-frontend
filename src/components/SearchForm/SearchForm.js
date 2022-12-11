@@ -19,13 +19,17 @@ function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieT
     setSearchFormShortMovie(checked);
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function setFormData() {
     handleForm({
       title: SearchFormTitle,
       short: SearchFormShortMovie,
     });
     handlePreloaderVisibility(true);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setFormData();
   }
 
   React.useEffect(() => {
@@ -37,6 +41,12 @@ function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieT
     setSearchFormShortMovie(movieShort);
   }, [movieTitle, movieShort]);
 
+  React.useEffect(() => {
+    if(SearchFormTitle) {
+      setFormData();
+    }
+  }, [SearchFormShortMovie]);
+
   return (
     <form className="search-form" onSubmit={handleSubmit}>
       <div className="search-form__wrapper">
@@ -45,7 +55,7 @@ function SearchForm({ btnDisabled, handleForm, handlePreloaderVisibility, movieT
           <img src={iconSearch} alt="Поиск" />
         </button>
       </div>
-      <input className="search-form__toggler" id="short" type="checkbox" name="short" onChange={handleChangeToggler} checked={SearchFormShortMovie} />
+      <input className="search-form__toggler" id="short" type="checkbox" name="short" onChange={handleChangeToggler} checked={SearchFormShortMovie} disabled={BtnDisabled} />
       <label className="search-form__toggler-title" for="short">Короткометражки</label>
     </form>
   );

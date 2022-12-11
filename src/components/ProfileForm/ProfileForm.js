@@ -65,10 +65,7 @@ function ProfileForm({ handleForm, handleLogout, popupData, isPopupOpen, toggleP
   }, [ProfileFormData]);
 
   React.useEffect(() => {
-    setProfileFormData({
-      name: name,
-      email: email
-    });
+    setProfileFormData({});
   }, [name, email]);
 
   return (
