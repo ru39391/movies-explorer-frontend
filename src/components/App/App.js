@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -21,6 +21,7 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
 
   const [MoviesList, setMoviesList] = React.useState([]);
   const [CurrentUser, setCurrentUser] = React.useState({});
@@ -197,7 +198,7 @@ function App() {
           });
           setLoggedIn(true);
           setCardsList(userCards);
-          history.push('/movies');
+          history.push(location.pathname);
         })
         .catch((err) => {
           console.log(err);

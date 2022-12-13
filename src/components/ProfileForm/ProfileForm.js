@@ -57,16 +57,20 @@ function ProfileForm({ handleForm, handleLogout, popupData, isPopupOpen, toggleP
 
   function handleSubmit(e) {
     e.preventDefault();
+    setBtnDisabled(true);
     handleForm(ProfileFormData);
   }
 
   React.useEffect(() => {
-    validateFormData(ProfileFormData);
-  }, [ProfileFormData]);
+    setProfileFormData({ name, email });
+  }, [name, email]);
 
   React.useEffect(() => {
-    setProfileFormData({});
-  }, [name, email]);
+    validateFormData(ProfileFormData);
+    if(ProfileFormData.name === name && ProfileFormData.email === email) {
+      setBtnDisabled(true);
+    }
+  }, [ProfileFormData]);
 
   return (
     <>

@@ -52,6 +52,7 @@ function Login({ formTitle, btnCaption, footerText, footerTitle, footerUrl, popu
 
   function handleSubmit(e) {
     e.preventDefault();
+    setBtnDisabled(true);
     handleForm(LoginFormData);
   }
 

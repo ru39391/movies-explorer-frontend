@@ -59,6 +59,7 @@ function Register({ formTitle, btnCaption, footerText, footerTitle, footerUrl, p
 
   function handleSubmit(e) {
     e.preventDefault();
+    setBtnDisabled(true);
     handleForm(RegisterFormData);
   }
 
