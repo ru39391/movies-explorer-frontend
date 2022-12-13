@@ -1,7 +1,7 @@
 import React from 'react';
-import { cardsUrl } from './constants';
+import { access } from './constants';
 
-class Api extends React.Component {
+class MoviesApi extends React.Component {
   constructor(baseUrl) {
     super();
     this._baseUrl = baseUrl;
@@ -15,21 +15,17 @@ class Api extends React.Component {
     return Promise.reject(`${resultAlert}: ${result.status}`);
   }
 
-  _setHeaders() {
-    return {
-      'Content-Type': 'application/json'
-    };
-  }
-
-  getInitialCards(jwt) {
+  getInitialMovies() {
     return fetch(`${this._baseUrl}/beatfilm-movies`, {
       method: 'GET',
-      headers: this._setHeaders()
+      headers: {
+        'Content-Type': 'application/json'
+      },
     })
       .then((res) => {return this._checkResponse(res, 'Ошибка при загрузке карточек')});
   }
 }
 
-const api = new Api(cardsUrl);
+const moviesApi = new MoviesApi(access.moviesUrl);
 
-export default api;
+export default moviesApi;

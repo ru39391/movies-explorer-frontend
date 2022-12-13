@@ -50,10 +50,7 @@
   height: 100%;
   z-index: 10;
   padding: 20px;
-}
-
-.preloader_invisible {
-  display: none;
+  box-sizing: border-box;
 }
 
 .preloader__container {

@@ -15,7 +15,7 @@ function Portfolio() {
           <span className="portfolio-list__text">Адаптивный сайт</span>
           <img className="portfolio-list__picture" src={iconArrow} alt="Адаптивный сайт" />
         </a>
-        <a className="portfolio-list__link" href="https://ru39391.github.io/" target="_blank" rel="noopener noreferrer">
+        <a className="portfolio-list__link" href="https://ru39391-d.students.nomoredomains.icu/" target="_blank" rel="noopener noreferrer">
           <span className="portfolio-list__text">Одностраничное приложение</span>
           <img className="portfolio-list__picture" src={iconArrow} alt="Одностраничное приложение" />
         </a>

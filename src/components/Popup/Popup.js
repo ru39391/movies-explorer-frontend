@@ -1,0 +1,25 @@
+import React from 'react';
+import { NavLink } from "react-router-dom";
+import iconClose from '../../images/icon-close.svg';
+import iconError from '../../images/icon-error.svg';
+import iconSuccess from '../../images/icon-success.svg';
+import './Popup.css';
+
+function Popup({ popupTitle, isOpen, isError, popupLinkTitle, popupLinkUrl, onHandleVisibility }) {
+  return (
+    <div className={`popup ${isOpen && 'popup_active'} ${isError && 'popup_type_error'}`}>
+      <div className="popup__wrapper">
+        <button className="popup__btn-close" type="button" onClick={onHandleVisibility}>
+          <img src={iconClose} alt="Закрыть окно" />
+        </button>
+        <div className="popup__header">
+          <img src={isError ? iconError : iconSuccess} alt={popupTitle} />
+        </div>
+        <p className="popup__title">{popupTitle}</p>
+        {!isError && <NavLink to={`/${popupLinkUrl}`} className="popup__link" onClick={onHandleVisibility}>{popupLinkTitle}</NavLink>}
+      </div>
+    </div>
+  );
+}
+
+export default Popup;

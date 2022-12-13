@@ -1,12 +1,14 @@
 import React from 'react';
 import Logo from '../Logo/Logo';
+import HeaderProfile from '../HeaderProfile/HeaderProfile';
+import HeaderUnauthorized from '../HeaderUnauthorized/HeaderUnauthorized';
 import './Header.css';
 
-function Header({children, headerClassMod}) {
+function Header({ isLoggedIn }) {
   return (
-    <header className={`header ${headerClassMod}`}>
+    <header className={`header ${isLoggedIn && 'header_margin_bottom'}`}>
       <Logo />
-      {children}
+      {isLoggedIn ? <HeaderProfile /> : <HeaderUnauthorized />}
     </header>
   );
 }

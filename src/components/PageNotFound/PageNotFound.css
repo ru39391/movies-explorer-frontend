@@ -46,9 +46,13 @@
 }
 
 .not-found__link {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   line-height: 1.2;
   color: #3456F3;
   text-decoration: none;
+  background-color: rgba(0,0,0,0);
 }
 
 @media (max-width:767px) {
