@@ -4,8 +4,9 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { moviesListConfig, gridParams } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, removeCard, popupData, isPopupOpen, togglePopupVisibility }) {
+function MoviesCardList({ cards, userCards, isNoResults, errorMess, loaderData, addCard, removeCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const { warningMess } = moviesListConfig;
+  const alertMess = Boolean(errorMess) ? errorMess : warningMess;
   const { title, isError } = popupData;
   const { desktopData } = gridParams;
   const [LoaderData, setLoaderData] = React.useState({
@@ -22,7 +23,7 @@ function MoviesCardList({ cards, userCards, isNoResults, loaderData, addCard, re
   return (
     <>
       <div className={`card-list ${isNoResults && 'card-list_noresults'}`}>
-        {isNoResults && warningMess}
+        {isNoResults && alertMess}
         {filtredCards.map((cardsItem, index) => (
           <MoviesCard
             key={Boolean(cardsItem.movieId) ? cardsItem.movieId : cardsItem.id}

@@ -12,7 +12,6 @@ import ProfileForm from '../ProfileForm/ProfileForm';
 import Footer from '../Footer/Footer';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
-import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 import { CONFLICT_ERROR_CODE, signupConfig, signinConfig, profileEditConfig, moviesListConfig } from '../../utils/constants';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -23,20 +22,9 @@ function App() {
   const history = useHistory();
   const location = useLocation();
 
-  const [MoviesList, setMoviesList] = React.useState([]);
   const [CurrentUser, setCurrentUser] = React.useState({});
-  React.useEffect(() => {
-    moviesApi.getInitialMovies()
-    .then((res) => {
-      setMoviesList(res);
-    })
-    .catch((err) => {
-      console.log(err);
-      showErrorMess(moviesListConfig);
-    });
-  }, []);
-
   const [IsPreloaderVisible, setPreloaderVisibility] = React.useState(false);
+
   function handlePreloaderVisibility(value) {
     setPreloaderVisibility(value);
   };
@@ -105,7 +93,8 @@ function App() {
   }
 
   function signOut() {
-    localStorage.removeItem('token');
+    localStorage.clear();
+    setCurrentUser({});
     setLoggedIn(false);
     history.push('/');
   }
@@ -138,6 +127,7 @@ function App() {
             title: status === CONFLICT_ERROR_CODE ? conflictErrorMess : validationErrorMess,
           });
           togglePopupVisibility();
+          signOut();
         });
     }
   }
@@ -165,6 +155,7 @@ function App() {
         })
         .catch(err => {
           console.log(err);
+          signOut();
           showErrorMess(moviesListConfig);
         });
     }
@@ -180,6 +171,7 @@ function App() {
         })
         .catch(err => {
           console.log(err);
+          signOut();
           showErrorMess(moviesListConfig);
         });
     }
@@ -202,6 +194,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          signOut();
           showErrorMess(moviesListConfig);
         });
     }
@@ -218,7 +211,7 @@ function App() {
         <ProtectedRoute exact path="/movies" isLoggedIn={IsLoggedIn}>
           <Header isLoggedIn={IsLoggedIn} />
           <PreloaderContext.Provider value={IsPreloaderVisible}>
-            <Movies cards={MoviesList} userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
+            <Movies userCards={CardsList} handlePreloaderVisibility={handlePreloaderVisibility} addUserCard={addUserCard} removeUserCard={removeUserCard} popupData={PopupData} isPopupOpen={IsPopupOpen} togglePopupVisibility={togglePopupVisibility} />
           </PreloaderContext.Provider>
           <Footer />
         </ProtectedRoute>

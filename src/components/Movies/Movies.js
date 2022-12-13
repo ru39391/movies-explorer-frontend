@@ -3,19 +3,22 @@ import Content from '../Content/Content';
 import Preloader from '../Preloader/Preloader';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { SHORT_MOVIE_DURATION, breakPointsData, gridParams } from '../../utils/constants';
+import moviesApi from '../../utils/MoviesApi';
+import { SHORT_MOVIE_DURATION, breakPointsData, gridParams, moviesListConfig } from '../../utils/constants';
 import PreloaderContext from '../../contexts/PreloaderContext';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, removeUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
+function Movies({ userCards, handlePreloaderVisibility, addUserCard, removeUserCard, popupData, isPopupOpen, togglePopupVisibility }) {
   const currentUserId = React.useContext(CurrentUserContext).id;
   const IsPreloaderVisible = React.useContext(PreloaderContext);
 
   const { desktopPoint, mobilePoint } = breakPointsData;
   const { desktopData, tabletData, mobileData } = gridParams;  
 
-  const [BtnDisabled, setBtnDisabled] = React.useState(true);
+  const [MoviesArr, setMoviesArr] = React.useState([]);
+  const [ErrorMess, setErrorMess] = React.useState('');
   const [IsNoResults, setNoResults] = React.useState(false);
+  const [BtnDisabled, setBtnDisabled] = React.useState(true);
   const [CardLoaderInvisible, setCardLoaderInvisible] = React.useState(true);
   const [CardLoaderParams, setCardLoaderParams] = React.useState(desktopData);
   const [DocumentWidth, setDocumentWidth] = React.useState(document.body.scrollWidth);
@@ -30,14 +33,11 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   }
   
   function checkLocalParams(userId) {
-    const localMoviesArr = JSON.parse(localStorage.getItem(`movies_arr_${userId}`));
-    const localStorageData = {
+    setCurrentUserSearchResults({
       title: checkParam(localStorage.getItem(`movies_title_${userId}`), CurrentUserSearchResults.title),
-      short: JSON.parse(localStorage.getItem(`movies_short_${userId}`)),
-      movies: checkParam(localMoviesArr, CurrentUserSearchResults.movies)
-    }
-    setCurrentUserSearchResults(localStorageData);
-    setNoResults(Array.isArray(localMoviesArr) && !localMoviesArr.length);
+      short: checkParam(JSON.parse(localStorage.getItem(`movies_short_${userId}`)), CurrentUserSearchResults.short),
+      movies: checkParam(JSON.parse(localStorage.getItem(`movies_arr_${userId}`)), CurrentUserSearchResults.movies)
+    });
   }
 
   function handleResize() {
@@ -89,7 +89,7 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   }
 
   function searchMovies(data) {
-    const { title, short, movies } = setSearchResults(data, cards, currentUserId);
+    const { title, short, movies } = setSearchResults(data, MoviesArr, currentUserId);
     setCurrentUserSearchResults({ title, short, movies });
     Boolean(movies.length) ? setNoResults(false) : setNoResults(true);
   }
@@ -110,6 +110,19 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
   }
 
   React.useEffect(() => {
+    moviesApi.getInitialMovies()
+    .then((res) => {
+      setMoviesArr(res);
+      checkLocalParams(currentUserId)
+    })
+    .catch((err) => {
+      console.log(err);
+      setNoResults(true);
+      setErrorMess(moviesListConfig.errorMess);
+    });
+  }, []);
+
+  React.useEffect(() => {
     if(CurrentUserSearchResults.title) {
       setBtnDisabled(false);
     }
@@ -127,15 +140,11 @@ function Movies({ cards, userCards, handlePreloaderVisibility, addUserCard, remo
     handleResize();
   }, [DocumentWidth]);
 
-  React.useEffect(() => {
-    checkLocalParams(currentUserId);
-  }, [currentUserId]);
-
   return (
     <Content contentClassMod="content_padding_none">
       <div className="wrapper wrapper_padding_min">
         <SearchForm btnDisabled={BtnDisabled} handleForm={searchMovies} handlePreloaderVisibility={handlePreloaderVisibility} movieTitle={CurrentUserSearchResults.title} movieShort={CurrentUserSearchResults.short} />
-        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} loaderData={CardLoaderParams} addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
+        {IsPreloaderVisible ? <Preloader /> : <MoviesCardList cards={CurrentUserSearchResults.movies} userCards={userCards} isNoResults={IsNoResults} errorMess={ErrorMess} loaderData={CardLoaderParams} addCard={addCard} removeCard={removeCard} popupData={popupData} isPopupOpen={isPopupOpen} togglePopupVisibility={togglePopupVisibility} />}
         <div className={`show-more ${CardLoaderInvisible && 'show-more_invisible'}`}>
           <button className="show-more__btn" type="button" onClick={addMovies}>Ещё</button>
         </div>
